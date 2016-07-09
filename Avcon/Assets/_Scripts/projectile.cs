@@ -36,8 +36,15 @@ public class projectile : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			Destroy (other.gameObject);
 		}
-		//if (
+		if (shootScript.currentProjectileNum == 4) {
+			shootScript.currentProjectileNum = 0;
+		} else if (shootScript.currentProjectileNum > 4) {
+			Debug.LogError ("The 'currentProjectileNum' is out of range, look at projectile.cs and PlayerShooting.cs");
+		} else {
+			shootScript.currentProjectileNum++;
+		}
 
+		shootScript.displayProjectile ();
 		Destroy(gameObject);
 	}
 
