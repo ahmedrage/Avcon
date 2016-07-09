@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/_Scenes/LevelOne/OneStart.unity
+  isLoaded: 1
+  isActive: 1
