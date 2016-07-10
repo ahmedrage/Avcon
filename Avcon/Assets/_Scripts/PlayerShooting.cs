@@ -51,6 +51,7 @@ public class PlayerShooting : MonoBehaviour {
 		}
 		currentProjectile = Instantiate (shootObjects [currentProjectileNum], firePoint.position, shootObjects[currentProjectileNum].transform.rotation) as GameObject;
 		currentProjectile.transform.parent = playerController.transform.FindChild("FirePoint");
+		currentProjectile.transform.rotation = shootObjects [currentProjectileNum].transform.rotation;
 		Destroy(currentProjectile.GetComponent<projectile>());
 	}
 }
