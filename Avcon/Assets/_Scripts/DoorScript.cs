@@ -6,8 +6,10 @@ public class DoorScript : MonoBehaviour {
 	public GameObject Player;
 	public Transform Target;
 	public int layerMask;
+
+	public bool transformToTarget; // if true the player is teleporting to the target, otherwise he is teleporting from the target to the transform connected to the script
 	AudioSource doorAudio;
-	// Use this for initialization
+
 	void Start () {
 		Player = GameObject.FindGameObjectWithTag ("Player");
 		layerMask = 1 << 9;
@@ -15,10 +17,15 @@ public class DoorScript : MonoBehaviour {
 		doorAudio = GetComponent<AudioSource> ();
 	}
 	
-	// Update is called once per frame
+
 	void Update () {
-		if (Vector3.Distance (transform.position, Player.transform.position) < range) {
+		if (Vector3.Distance (transform.position, Player.transform.position) < range && Input.GetKeyDown(KeyCode.E)) {
+			transformToTarget = true;
 			Teleport();
+		} else if (Vector3.Distance (Target.position, Player.transform.position) < range && Input.GetKeyDown(KeyCode.E)) {
+			print ("Test");
+			transformToTarget = false;
+			Teleport ();
 		}
 
 
@@ -26,11 +33,14 @@ public class DoorScript : MonoBehaviour {
 		
 
 	void Teleport() {
-		if (Input.GetKeyDown(KeyCode.E)){
 			doorAudio.Play ();
+		if (transformToTarget == true) {
+			print ("Teleporting to target");
 			Player.transform.position = Target.position;
+		} else {
+			print ("Teleporting to origin");
+			Player.transform.position = transform.position;
 		}
-			
 	}
 
 

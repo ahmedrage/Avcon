@@ -9,25 +9,25 @@ public class projectile : MonoBehaviour {
 
 	AudioSource smash;
 	GameObject player;
-
-	Vector3 force;
+	Vector3 projectileVelocity;
 	void Start () {
+		shootScript = player.GetComponent<PlayerShooting> ();
 		Physics.IgnoreLayerCollision (8, 8);
 		Physics.IgnoreLayerCollision (8, 12);
 		player = GameObject.FindWithTag ("Player");
 		smash = GameObject.FindGameObjectWithTag ("Gm").GetComponent<AudioSource> ();
-		shootScript = player.GetComponent<PlayerShooting> ();
 	}
 
 	void Awake() {
 		player = GameObject.FindWithTag ("Player");
-		force = player.transform.forward * speed;
 		StartCoroutine ("selfDestruct");
+		projectileVelocity = GameObject.Find ("FirePoint").transform.forward * speed;
 	}
 		
 	void Update () {
-		GetComponent<Rigidbody>().AddForce (force * Time.deltaTime);
+		GetComponent<Rigidbody> ().velocity = projectileVelocity;
 		transform.Rotate( new Vector3 (transform.rotation.x + rotationSpeed * Time.deltaTime, transform.rotation.y, transform.rotation.z));
+
 	}
 
 	void OnTriggerEnter (Collider other) {
@@ -36,16 +36,7 @@ public class projectile : MonoBehaviour {
 		if (other.gameObject.tag == "Enemy") {
 			Destroy (other.gameObject);
 		}
-		if (shootScript.currentProjectileNum == 4) {
-			shootScript.currentProjectileNum = 0;
-		} else if (shootScript.currentProjectileNum > 4) {
-			Debug.LogError ("The 'currentProjectileNum' is out of range, look at projectile.cs and PlayerShooting.cs");
-		} else {
-			shootScript.currentProjectileNum++;
-		}
-
-		shootScript.displayProjectile ();
-		Destroy(gameObject);
+		Destroy (gameObject);
 	}
 
 	IEnumerator selfDestruct () {
