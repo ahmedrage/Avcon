@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public float timeTillSeen;
 	public float meleeDistance;
 	public float weaponDistance;
-	public float distanceToThrow; 
+	//public float distanceToThrow; 
 	public float distanceToMelee;
 	public float waitTimeRanged;
 	public float meleeSpeed;
@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public bool alert; 
 	public bool sightLine;
 	public bool hasWeapon;
+	public bool pathUpdating;
 	public Rigidbody rb;
 	public NavMeshAgent pathFinder;
 	public Transform[] patrolPoints;
@@ -33,12 +34,22 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	private IEnemystate currentState;
 	private int points = 0;
 
+	// new melee attack test
+	float attackDistanceThreshold = 1.5f;
+	float timeBetweenAttacks = 1;
+	float nextAttackTime;
+	float collisionSize;
+	float playerCollisionSize;
+
+
 	// Use this for initialization
 	void Start () 
 	{
 		rb = GetComponent<Rigidbody> ();
-		rb.isKinematic = true;
 		pathFinder = GetComponent<NavMeshAgent> ();
+		collisionSize = GetComponent<CapsuleCollider> ().radius;
+		playerCollisionSize = player.GetComponent<CapsuleCollider> ().radius;
+		rb.isKinematic = true;
 		toState (new enemyPatrol ());
 		seen = true;
 		Drop = GameObject.Find ("weaponDrop").GetComponent<weaponDrop> ();
@@ -82,16 +93,16 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		
 	public void Seen()
 	{
-		Collider[] colliders = Physics.OverlapSphere (transform.position + transform.up, radius, 1 << LayerMask.NameToLayer ("player"));
+		Collider[] colliders = Physics.OverlapSphere (transform.position + transform.up, radius, 1 << LayerMask.NameToLayer ("Player"));
 		alert = colliders.Length > 0;
 
 		if (alert == true) {
 			radius = 7;
 			timeTillSeen -= Time.deltaTime;
-		} else {
+		}/* else {
 			radius = 3;
 			timeTillSeen = 2;
-		}
+		}*/
 
 		if (timeTillSeen <= 0.0f) {
 			seen = true;
@@ -101,16 +112,22 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		}
 
 		if (seen == true) {
+			pathFinder.speed = 4.5f;
 			toState (new enemySeen ());
 		}
 	}
 
 	public void Alert()
 	{
-		pathFinder.SetDestination (player.position);
-		alert = false;
-		prevPlayerPos = player.position;
-		transform.LookAt (player.position);
+		pathUpdating = true;	
+		if (pathUpdating) {
+			//Vector3 directionToPlayer = (player.position = transform.position).normalized;
+			//Vector3 playerPosition = player.position - directionToPlayer *(collisionSize + playerCollisionSize);
+			pathFinder.SetDestination (player.position);
+			alert = false;
+			prevPlayerPos = player.position;
+			transform.LookAt (player.position - transform.up);
+		}
 	}
 
 	public void OnCollisionEnter (Collision other)
@@ -142,8 +159,8 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		
 	public void lineOfSight()
 	{
-		sightLine = Physics.Linecast (transform.position, endPos.position, 1 << LayerMask.NameToLayer ("player"));
-		Debug.DrawLine(transform.position,endPos.position, Color.green);
+		sightLine = Physics.Linecast (transform.position + transform.up, endPos.position, 1 << LayerMask.NameToLayer ("Player"));
+		Debug.DrawLine (transform.position + transform.up, endPos.position, Color.green);
 	}
 
 	public void Weaponsearch()
@@ -175,21 +192,27 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	public void Attack()
 	{
-		if (hasWeapon == true && seen == true && sightLine == true && meleeDistance >= distanceToThrow) {
-			toState(new enemyWeapon());
+		if (hasWeapon == true && seen == true && sightLine == true/* && meleeDistance >= distanceToThrow*/) {
+					toState(new enemyWeapon());
 			}
 
-		if (seen == true && meleeDistance <= distanceToMelee) {
+		/*if (seen == true && meleeDistance <= distanceToMelee) {
 			toState (new enemyAttack ());
+		}*/
+
+		if (Time.time > nextAttackTime) {
+			if (meleeDistance < Mathf.Pow (attackDistanceThreshold, 2) && seen == true) {
+				nextAttackTime = Time.time + timeBetweenAttacks;
+				StartCoroutine ("meleeStopTime");
+			}
 		}
 	}
 
-	public void shortRange()
+	/*public void shortRange()
 	{
-		transform.LookAt(player.position);
 		hasWeapon = false;
 		StartCoroutine ("meleeStopTime");
-	}
+	}*/
 
 	public void longRange()
 	{
@@ -207,9 +230,25 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	IEnumerator meleeStopTime()
 	{
-		yield return new WaitForSeconds (2f);
-		transform.Translate (Vector3.forward * meleeSpeed);
-		StopCoroutine ("meleeStopTime");
+		pathUpdating = false;
+		pathFinder.enabled = false;
+
+		Vector3 currentPos = transform.position;
+		Vector3 targetPos = player.position;
+
+		float percent = 0;
+
+		while (percent <= 1) {
+
+			percent += Time.deltaTime * meleeSpeed;
+			float interpolation = (-Mathf.Pow(percent,2)+ percent)*4;
+			transform.position = Vector3.Lerp (currentPos, targetPos, interpolation);
+
+			yield return null;
+		}
+
+		pathUpdating = true;
+		pathFinder.enabled = true;
 	}
 
 	IEnumerator timeSearching()

@@ -8,7 +8,7 @@ public class enemyAttack : IEnemystate
 	public void Execute()
 	{
 		Debug.Log ("short range state");
-		enemy.shortRange ();
+		//enemy.shortRange ();
 	}
 	public void Enter (Enemy enemy)
 	{
