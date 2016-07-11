@@ -3,44 +3,37 @@ using System.Collections;
 
 public class pickUp : MonoBehaviour 
 {	
-	public Transform handPos;
+	public int ammoType;
+	public float range;
 
-	private Rigidbody rb;
-	private bool hasWeapon;
+	GameObject player;
+	Rigidbody rb;
+	PlayerShooting shootScript;
 
-	// Use this for initialization
 	void Start () 
 	{
 		rb = GetComponent<Rigidbody> ();
+		player = GameObject.Find ("FPSController");
+		shootScript = player.GetComponent<PlayerShooting> ();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-	}
-
-	void OnMouseOver()
-	{
-		if (gameObject.tag == "PlayerPickUp") {
+		if (Vector3.Distance (player.transform.position, transform.position) < range && shootScript.ammo < 3) {
 			PickUp ();
 		}
 	}
 
 	void PickUp()
 	{
-		if (Input.GetButtonDown ("Fire1")) {
-			if (!hasWeapon) {
-				rb.useGravity = false;
-				rb.isKinematic = true;
-				this.transform.position = handPos.transform.position;
-				this.transform.parent = handPos.transform;
-				hasWeapon = true;
-			} else {
-				this.transform.parent = null;
-				rb.isKinematic = false;
-				rb.useGravity = true;
-				hasWeapon = false;
-			}
+		shootScript.ammo++;
+		shootScript.ammoArray [shootScript.ammo - 1] = ammoType - 1;
+
+		if (shootScript.currentProjectile == null) {
+			//shootScript.displayProjectile (shootScript.ammoArray [0]);
 		}
+		shootScript.displayProjectile (shootScript.ammoArray [shootScript.ammo - 1]);
+			Destroy (gameObject);
 	}
 }
