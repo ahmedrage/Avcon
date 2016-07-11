@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public bool alert; 
 	public bool sightLine;
 	public bool hasWeapon;
-	public bool pathUpdating;
 	public Rigidbody rb;
 	public NavMeshAgent pathFinder;
 	public Transform[] patrolPoints;
@@ -29,7 +28,8 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	private IEnemystate currentState;
 	private int points = 0;
-	private float attackDistance = 1.5f;
+	private float attackDistance = 1.7f;
+	private float throwDistance;
 	private float timeBetweenAttacks = 1;
 	private float nextAttackTime;
 	private float collisionSize;
@@ -50,7 +50,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		playerCollisionSize = player.GetComponent<CapsuleCollider> ().radius;
 		rb.isKinematic = true;
 		toState (new enemyPatrol ());
-		//seen = true;
 	}
 	
 	// Update is called once per frame
@@ -97,10 +96,10 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		if (alert == true) {
 			radius = 7;
 			timeTillSeen -= Time.deltaTime;
-		} else {
+		} /*else {
 			radius = 3;
 			timeTillSeen = 2;
-		}
+		}*/
 
 		if (timeTillSeen <= 0.0f) {
 			seen = true;
@@ -117,17 +116,17 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	public void Alert()
 	{
-		pathUpdating = true;	
-		if (pathUpdating) {
-			Vector3 distanceFromPlayer = (player.position - transform.position).normalized;
-			Vector3 targetPosition = player.position - distanceFromPlayer * (collisionSize + playerCollisionSize);
-			pathFinder.SetDestination (targetPosition);
-			alert = false;
-			prevPlayerPos = player.position;
-			if (player.position.y >= -2.5f) {
-				transform.LookAt (player.position - transform.up);
-			}
+		if (hasWeapon) {
+			throwDistance = 2;
+		} else {
+			throwDistance = 0;
 		}
+
+		Vector3 distanceFromPlayer = (player.position - transform.position).normalized;
+		Vector3 targetPosition = player.position - distanceFromPlayer * (collisionSize + playerCollisionSize + throwDistance);
+		pathFinder.SetDestination (targetPosition);
+		prevPlayerPos = player.position;
+		transform.LookAt (player.position - transform.up);
 	}
 
 	public void OnCollisionEnter (Collision other)
@@ -152,6 +151,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			weapon.transform.position = shotSpawn.transform.position;
 			weapon.transform.rotation = shotSpawn.transform.rotation;
 			weapon.transform.parent = shotSpawn.transform;
+
 		} else {
 			weapon.transform.parent = null;
 		}
@@ -197,7 +197,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			}
 
 		if (Time.time > nextAttackTime) {
-			if (meleeDistance < Mathf.Pow (attackDistance, 2) && seen == true) {
+			if (meleeDistance < Mathf.Pow (attackDistance, 2) && seen == true && hasWeapon == false) {
 				nextAttackTime = Time.time + timeBetweenAttacks;
 				StartCoroutine ("meleeStopTime");
 			}
@@ -220,16 +220,15 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	IEnumerator meleeStopTime()
 	{
-		pathUpdating = false;
 		pathFinder.enabled = false;
 
 		Vector3 currentPos = transform.position;
-		Vector3 targetPos = player.position;
+		Vector3 distanceFromPlayer = (player.position - transform.position).normalized;
+		Vector3 targetPos = player.position - distanceFromPlayer * (collisionSize);
 
 		float percent = 0;
 
 		while (percent <= 1) {
-
 			percent += Time.deltaTime * meleeSpeed;
 			float interpolation = (-Mathf.Pow(percent,2)+ percent)*4;
 			transform.position = Vector3.Lerp (currentPos, targetPos, interpolation);
@@ -237,7 +236,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			yield return null;
 		}
 
-		pathUpdating = true;
 		pathFinder.enabled = true;
 	}
 

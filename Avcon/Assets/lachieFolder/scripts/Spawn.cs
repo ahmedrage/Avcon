@@ -3,15 +3,21 @@ using System.Collections;
 
 public class Spawn : MonoBehaviour {
 
-	public Wave[] waves;
+	public Wave[] waves; 
 	public GameObject Enemy;
+	public float max_X; 
+	public float min_X; 
+	public float max_Z; 
+	public float min_Z; 
 
 	GameObject[] enemiesRemaining;
 	Wave currentWave;
+	Vector3 changedPos;
 	int currentWaveNumber;
-
 	int enemiesRemainingToSpawn;
 	float nextSpawnTime;
+	float radius = 1.5f;
+	bool hit;
 
 	void Start(){
 		NextWave ();
@@ -19,13 +25,24 @@ public class Spawn : MonoBehaviour {
 	}
 
 	void Update () {
+
+		changedPos = new Vector3 (Random.Range (min_X, max_X), -3.5f, Random.Range (min_Z, max_Z));
+		
+		Collider[] colliders = Physics.OverlapSphere (transform.position, radius, 1 << LayerMask.NameToLayer ("Obstacle"));
+		hit = colliders.Length > 0;
+
+		if (hit == true) {
+			transform.position = changedPos;
+		}
+
 		enemiesRemaining = GameObject.FindGameObjectsWithTag ("Enemy");
 		print (enemiesRemaining.Length);
+
 		if (enemiesRemainingToSpawn > 0 && Time.time > nextSpawnTime) {
 			enemiesRemainingToSpawn--;
 			nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
-			Vector3 position = new Vector3 (Random.Range(-9.0f, 5.0f), 0, Random.Range(2.0f, 13.0f));
-			Instantiate (Enemy ,position , Quaternion.identity );
+			Instantiate (Enemy, transform.position, Quaternion.identity);
+			transform.position = changedPos;
 		}
 	}
 
@@ -35,7 +52,6 @@ public class Spawn : MonoBehaviour {
 			currentWave = waves [currentWaveNumber - 1];
 			enemiesRemainingToSpawn = currentWave.enemyCount;
 		}
-
 	}
 
 	[System.Serializable]
@@ -46,7 +62,7 @@ public class Spawn : MonoBehaviour {
 
 	IEnumerator enemyCheck()
 	{
-		float checkRate = 0.75f;
+		float checkRate = 0.25f;
 		while (true) {
 			if (enemiesRemaining.Length == 0) {
 				NextWave ();
