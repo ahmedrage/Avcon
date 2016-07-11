@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	//public GameObject deathParticle;
 
 	private IEnemystate currentState;
+	private bool hittingObject;
 	private int points = 0;
 	private float attackDistance = 1.7f;
 	private float throwDistance;
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () 
+	void LateUpdate () 
 	{
 		currentState.Execute ();
 		meleeDistance = Vector3.Distance (transform.position, player.position);
@@ -197,6 +198,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			}
 
 		if (Time.time > nextAttackTime) {
+			hittingObject = Physics.Linecast (transform.position + transform.up, endPos.position, 1 << LayerMask.NameToLayer ("Obstacle"));
 			if (meleeDistance < Mathf.Pow (attackDistance, 2) && seen == true && hasWeapon == false) {
 				nextAttackTime = Time.time + timeBetweenAttacks;
 				StartCoroutine ("meleeStopTime");

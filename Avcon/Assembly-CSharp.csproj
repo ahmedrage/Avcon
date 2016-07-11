@@ -112,6 +112,7 @@
      <Compile Include="Assets\lachieFolder\scripts\enemySeen.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyWeapon.cs" />
      <Compile Include="Assets\lachieFolder\scripts\levelGenTest.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\objectKinematic.cs" />
      <Compile Include="Assets\lachieFolder\scripts\pickUp.cs" />
      <Compile Include="Assets\lachieFolder\scripts\playerController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\playerShotMover.cs" />
