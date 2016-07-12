@@ -106,6 +106,7 @@
      <Compile Include="Assets\lachieFolder\scripts\Enemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\IEnemystate.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Printer.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\Rotator.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Spawn.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyAttack.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyPatrol.cs" />
