@@ -6,8 +6,12 @@ public class weaponDrop : MonoBehaviour {
 	public GameObject[] weapons;
 	public GameObject currentWeapon;
 	public float weaponTime;
+	public float radius;
 	public bool pickedUp;
-	public Vector3 changedPos;
+
+	private Vector3 changedPos;
+	private bool hit;
+
 
 	// Use this for initialization
 	void Start () 
@@ -20,12 +24,19 @@ public class weaponDrop : MonoBehaviour {
 	void Update () 
 	{
 		changedPos = new Vector3 (Random.Range (-4,9), -3.3f, Random.Range (-6, 6));
-	}
+		Collider[] colliders = Physics.OverlapSphere (transform.position, radius, 1 << LayerMask.NameToLayer("Obstacle"));
 
+		hit = colliders.Length > 0;
+
+		if (hit == true) {
+			transform.position = changedPos;
+		}
+	}
 	void OnTriggerEnter ( Collider other)
 	{
 		if (other.gameObject.tag == "Enemy") {
 			pickedUp = true;
+			Destroy (other.gameObject);
 			StartCoroutine ("timeTillNextWeapon");
 		}
 	}
