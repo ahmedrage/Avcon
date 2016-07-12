@@ -20,11 +20,9 @@ public class printerShotMover : MonoBehaviour {
 		transform.Rotate (0, 0, rotateSpeed);
 	}
 
-	void OnCollisionEnter(Collision other)
+	void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject) {
-			Destroy (gameObject);
-		}
+		Destroy (gameObject);
 	}
 
 	IEnumerator timeTillDestroy()

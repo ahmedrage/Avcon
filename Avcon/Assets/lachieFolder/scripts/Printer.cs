@@ -8,12 +8,11 @@ public class Printer : MonoBehaviour {
 	public float lifeTime;
 	public Transform shotSpawn;
 	public GameObject shot;
-
+	public AudioSource shoot;
 	// Use this for initialization
 	void Start () 
 	{
 		InvokeRepeating ("Malfunction", 0f, shotDelay);
-		StartCoroutine ("timeTillDestroy");
 	}
 	
 	// Update is called once per frame
@@ -24,12 +23,7 @@ public class Printer : MonoBehaviour {
 
 	void Malfunction()
 	{
+		shoot.Play ();
 		Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
-	}
-
-	IEnumerator timeTillDestroy()
-	{
-		yield return new WaitForSeconds (lifeTime);
-		Destroy (gameObject);
 	}
 }
