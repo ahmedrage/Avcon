@@ -33,7 +33,6 @@ public class shotMover : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player") {
 			print ("player hit");
-			Destroy (other.gameObject);
 		}
 	}
 }

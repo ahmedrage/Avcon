@@ -36,7 +36,6 @@ public class weaponDrop : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Enemy") {
 			pickedUp = true;
-			Destroy (other.gameObject);
 			StartCoroutine ("timeTillNextWeapon");
 		}
 	}
