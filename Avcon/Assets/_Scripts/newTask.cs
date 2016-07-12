@@ -21,22 +21,17 @@ public class newTask : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider Other) {
-		print ("triggered");
 		addTask();
 		triggered = true;
-		print ("triggered");
 	}
 
 	void addTask(){
-		
-		print ("func'd");
-		if (triggered == false && taskScript.taskNumber < 3) { 
-			taskScript.taskNumber++;
+		if (triggered == false && taskScript.tasksCompleted < 3) { 
+			taskScript.tasksCompleted++;
 			beep.Play ();
-			taskScript.playerTasks [taskScript.taskNumber - 1].desc = desc;
-			taskScript.playerTasks [taskScript.taskNumber - 1].stress = stress;
-			taskScript.playerTasks [taskScript.taskNumber - 1].target = target;
-
+			taskScript.playerTasks [taskScript.tasksCompleted - 1].desc = desc;
+			taskScript.playerTasks [taskScript.tasksCompleted - 1].stress = stress;
+			taskScript.playerTasks [taskScript.tasksCompleted - 1].target = target;
 			stressScript.stress += stress;
 		}
 	}

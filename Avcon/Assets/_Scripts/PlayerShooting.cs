@@ -17,12 +17,12 @@ public class PlayerShooting : MonoBehaviour {
 
 	[HideInInspector] public int[] ammoArray;
 	[HideInInspector] public int ammo;
+	[HideInInspector] public bool hasObject;
 
 	GameObject currentProjectile;
 	GameObject pickedObject;
 	Transform firePoint;
 	Rigidbody pickedRb;
-	bool hasObject;
 	float timeToShoot;
 	int currentProjectileNum;
 	RaycastHit pickUpHit;
@@ -43,7 +43,7 @@ public class PlayerShooting : MonoBehaviour {
 			shoot ();
 		}
 		if(pickUpHit.collider != null)
-		print (pickUpHit.collider.gameObject.tag);
+			print (pickUpHit.collider.gameObject.tag.ToString());
 	}
 		
 	void shoot (){
@@ -71,16 +71,15 @@ public class PlayerShooting : MonoBehaviour {
 			prompt.sprite = null;
 			prompt.gameObject.SetActive (false);
 		}
+		if (pickUpHit.collider != null && pickUpHit.collider.gameObject.tag == "PlayerPickUp" && hasObject == false && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0)) {
+			pickUp (true);
+		} 
+		else if (hasObject == true && (Input.GetButtonDown ("Fire2") || Input.GetAxis("Fire2") > 0)) {
+			pickUp (false);
+		}
 
 		if (pickUpHit.collider != null){
 			pickedObject = pickUpHit.collider.gameObject;
-			if (pickUpHit.collider != null && pickUpHit.collider.gameObject.tag == "PlayerPickUp" && hasObject == false && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0)) {
-				pickUp (true);
-			} 
-			else if (hasObject == true && (Input.GetButtonDown ("Fire2") || Input.GetAxis("Fire2") > 0)) {
-				pickUp (false);
-			}
-
 			if (pickUpHit.collider.tag == "Interact") {
 				prompt.gameObject.SetActive (true);
 				prompt.sprite = promptSprites [0];
@@ -88,7 +87,7 @@ public class PlayerShooting : MonoBehaviour {
 		}
 	}
 
-	void pickUp(bool pickingUp) {
+	public void pickUp(bool pickingUp) {
 		if (pickingUp == true) {
 			pickedObject = pickUpHit.collider.gameObject;
 			pickedRb = pickedObject.GetComponent<Rigidbody> ();
@@ -98,10 +97,12 @@ public class PlayerShooting : MonoBehaviour {
 			pickedObject.transform.parent = null;
 		}
 
+
 		pickedRb.useGravity = !pickingUp;
 		pickedRb.isKinematic = pickingUp;
 		hasObject = pickingUp;
 		pickedObject.GetComponent<Collider> ().isTrigger = pickingUp;
+		
 	}
 
 	public void displayProjectile (int ProjectileNum) {
