@@ -15,7 +15,7 @@ public class firstEncounter : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void FixedUpdate () 
 	{
 		playerToEnemyDistance = Vector3.Distance (transform.position, player.position);
 

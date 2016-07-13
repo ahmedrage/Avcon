@@ -6,11 +6,17 @@ public class weaponDrop : MonoBehaviour {
 	public GameObject[] weapons;
 	public GameObject currentWeapon;
 	public float weaponTime;
+	public float maxItemsPerRoom;
 	public float radius;
+	public float MaxX;
+	public float MinX;
+	public float MaxZ;
+	public float MinZ;
+	public float Y;
 	public bool pickedUp;
 
 	private Vector3 changedPos;
-	private bool hit;
+	public bool hit;
 
 
 	// Use this for initialization
@@ -23,12 +29,12 @@ public class weaponDrop : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		changedPos = new Vector3 (Random.Range (-4,9), -3.3f, Random.Range (-6, 6));
+		changedPos = new Vector3 (Random.Range (MinX,MaxX), Y, Random.Range (MinZ,MaxZ));
 		Collider[] colliders = Physics.OverlapSphere (transform.position, radius, 1 << LayerMask.NameToLayer("Obstacle"));
 
 		hit = colliders.Length > 0;
 
-		if (hit == true) {
+		if (hit == true || pickedUp == true) {
 			transform.position = changedPos;
 		}
 	}
@@ -42,9 +48,10 @@ public class weaponDrop : MonoBehaviour {
 
 	IEnumerator timeTillNextWeapon ()
 	{
-		transform.position = changedPos;
 		yield return new WaitForSeconds (weaponTime);
 		Instantiate (currentWeapon, transform.position, transform.rotation);
+		maxItemsPerRoom++;
 		pickedUp = false;
+		StopCoroutine ("timeTillNextWeapon");
 	}
 }
