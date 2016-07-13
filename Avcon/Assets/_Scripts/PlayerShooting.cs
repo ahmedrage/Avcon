@@ -95,13 +95,14 @@ public class PlayerShooting : MonoBehaviour {
 			pickedObject.transform.parent = hands;
 		} else {
 			pickedObject.transform.parent = null;
+
 		}
 
 
-		pickedRb.useGravity = !pickingUp;
-		pickedRb.isKinematic = pickingUp;
+		//pickedRb.useGravity = !pickingUp;
+		//pickedRb.isKinematic = pickingUp;
 		hasObject = pickingUp;
-		pickedObject.GetComponent<Collider> ().isTrigger = pickingUp;
+		//pickedObject.GetComponent<Collider> ().isTrigger = pickingUp;
 		
 	}
 
