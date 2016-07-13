@@ -102,6 +102,7 @@
      <Compile Include="Assets\_Scripts\rotationScript.cs" />
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
+     <Compile Include="Assets\firstEncounter.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Enemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\IEnemystate.cs" />
