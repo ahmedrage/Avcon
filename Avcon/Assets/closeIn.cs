@@ -15,22 +15,12 @@ public class closeIn : MonoBehaviour {
 		mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 		box = GetComponent<BoxCollider> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		if (other.gameObject.tag == "Player") {
 			StartCoroutine ("boxDestroyDelay");
 		}
-	}
-
-	void Flicker()
-	{
-		
 	}
 
 	IEnumerator boxDestroyDelay()

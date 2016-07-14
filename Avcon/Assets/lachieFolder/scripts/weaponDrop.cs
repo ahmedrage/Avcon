@@ -14,14 +14,18 @@ public class weaponDrop : MonoBehaviour {
 	public float MinZ;
 	public float Y;
 	public bool pickedUp;
+	public bool hit;
+
 
 	private Vector3 changedPos;
-	public bool hit;
+	private float numOfItems;
+	private bool canSpawn;
 
 
 	// Use this for initialization
 	void Start () 
 	{
+		canSpawn = true;
 		currentWeapon = weapons [Random.Range (0, weapons.Length)];
 		Instantiate(currentWeapon,transform.position,transform.rotation);
 	}
@@ -37,12 +41,18 @@ public class weaponDrop : MonoBehaviour {
 		if (hit == true || pickedUp == true) {
 			transform.position = changedPos;
 		}
+
+		if (numOfItems >= maxItemsPerRoom) {
+			canSpawn = false;
+		}
 	}
 	void OnTriggerEnter ( Collider other)
 	{
 		if (other.gameObject.tag == "Enemy") {
 			pickedUp = true;
-			StartCoroutine ("timeTillNextWeapon");
+			if (canSpawn) {
+				StartCoroutine ("timeTillNextWeapon");
+			}
 		}
 	}
 
@@ -50,7 +60,7 @@ public class weaponDrop : MonoBehaviour {
 	{
 		yield return new WaitForSeconds (weaponTime);
 		Instantiate (currentWeapon, transform.position, transform.rotation);
-		maxItemsPerRoom++;
+		numOfItems++;
 		pickedUp = false;
 		StopCoroutine ("timeTillNextWeapon");
 	}

@@ -13,7 +13,6 @@ public class shotMover : MonoBehaviour {
 	{
 		StartCoroutine ("lifeTime");
 		rb = GetComponent<Rigidbody> ();
-		rb.isKinematic = true;
 	}
 
 	// Update is called once per frame
@@ -32,6 +31,8 @@ public class shotMover : MonoBehaviour {
 	void OnCollisionEnter ( Collision other)
 	{
 		if (other.gameObject.tag == "Player") {
+			//rb.isKinematic = false;
+			Destroy(this.gameObject);
 			print ("player hit");
 		}
 	}

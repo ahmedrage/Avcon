@@ -14,10 +14,12 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public bool alert; 
 	public bool sightLine;
 	public bool hasWeapon;
+	public bool blocked; 
 	public Rigidbody rb;
 	public NavMeshAgent pathFinder;
 	public Transform[] patrolPoints;
 	public Transform endPos;
+	public Transform throwPos;
 	public Transform gunPos; 
 	public Transform player;
 	public Transform shotSpawn;
@@ -69,6 +71,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		Destroy ();
 		Attack ();
 		Pickup ();
+		obstacleCheck ();
 	}
 		
 	public void toState(IEnemystate nextState)
@@ -152,7 +155,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			weapon.transform.position = shotSpawn.transform.position;
 			weapon.transform.rotation = shotSpawn.transform.rotation;
 			weapon.transform.parent = shotSpawn.transform;
-
 		} else {
 			weapon.transform.parent = null;
 		}
@@ -164,12 +166,22 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		Debug.DrawLine (transform.position + transform.up, endPos.position, Color.green);
 	}
 
+	public void obstacleCheck()
+	{
+		hittingObject = Physics.Linecast (transform.position + transform.up, throwPos.position, 1 << LayerMask.NameToLayer ("Obstacle"));
+		if (hittingObject) {
+			blocked = true;
+			print ("hiting object");
+		} else {
+			blocked = false;
+		}
+	}
+
 	public void Weaponsearch()
 	{
 		if (weaponDistance < meleeDistance && hasWeapon == false && seen == true && gunPos != null) {
 			pathFinder.SetDestination (gunPos.position);
 		}
-
 		else if( weaponDistance <= 3 && hasWeapon == false && seen == false && gunPos != null){
 			pathFinder.SetDestination (gunPos.position);
 			toState(new enemyPatrol());
@@ -193,13 +205,13 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	public void Attack()
 	{
-		if (hasWeapon == true && seen == true && sightLine == true) {
+		if (hasWeapon == true && seen == true && sightLine == true && blocked == false) {
 				toState(new enemyWeapon());
 			}
 
 		if (Time.time > nextAttackTime) {
 			hittingObject = Physics.Linecast (transform.position + transform.up, endPos.position, 1 << LayerMask.NameToLayer ("Obstacle"));
-			if (meleeDistance < Mathf.Pow (attackDistance, 2) && seen == true && hasWeapon == false) {
+			if (meleeDistance < Mathf.Pow (attackDistance, 2) && seen == true && hasWeapon == false && blocked == false) {
 				nextAttackTime = Time.time + timeBetweenAttacks;
 				StartCoroutine ("meleeStopTime");
 			}
