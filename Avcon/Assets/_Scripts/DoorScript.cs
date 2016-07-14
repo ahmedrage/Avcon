@@ -4,6 +4,7 @@ using System.Collections;
 public class DoorScript : MonoBehaviour {
 	public float range;
 	public GameObject Player;
+	public PlayerShooting shootScript;
 	public Transform Target;
 	public bool transformToTarget; // if true the player is teleporting to the target, otherwise he is teleporting from the target to the transform connected to the script
 
@@ -12,6 +13,7 @@ public class DoorScript : MonoBehaviour {
 	void Start () {
 		Player = GameObject.Find ("Player");
 		doorAudio = GetComponent<AudioSource> ();
+		shootScript = Player.GetComponent<PlayerShooting> ();
 	}
 	void Update () {
 		if (Vector3.Distance (transform.position, Player.transform.position) < range && Input.GetButtonDown("Fire3")) {
@@ -28,9 +30,15 @@ public class DoorScript : MonoBehaviour {
 		if (transformToTarget == true) {
 			print ("Teleporting to target");
 			Player.transform.position = Target.position;
+			if (Player.transform.FindChild("FirstPersonCharacter").FindChild("Hands").childCount > 0) {
+				Player.transform.FindChild("FirstPersonCharacter").FindChild("Hands").GetChild(0).position = Target.position;
+			}
 		} else {
 			print ("Teleporting to origin");
 			Player.transform.position = transform.position;
+			if (Player.transform.FindChild("FirstPersonCharacter").FindChild("Hands").childCount > 0) {
+				Player.transform.FindChild("FirstPersonCharacter").FindChild("Hands").GetChild(0).position = transform.position;
+			}
 		}
 	}
 }

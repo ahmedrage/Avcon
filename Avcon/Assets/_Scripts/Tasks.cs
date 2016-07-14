@@ -25,18 +25,21 @@ public class Task {
 	public bool activated;
 	bool activated2;
 	float timeToWait;
+	public bool displayed;
 	PlayerShooting shootScript;
 
 	public void setMarker () {
 		if (taskObject != null && taskObject.transform.FindChild ("questMarker") != null && target != null && target.transform.FindChild ("questMarker") != null) {
-			if (active == true && held == false) {
+			if (active == true && held == false && desc != descOption1) {
 				taskObject.transform.FindChild ("questMarker").gameObject.SetActive (true);
 				target.transform.FindChild ("questMarker").gameObject.SetActive (false);
 				desc = descOption1;
-			} else if (held == true && active == true) {
+				tasksClass.setText ();
+			} else if (held == true && active == true && desc != descOption2) {
 				target.transform.FindChild ("questMarker").gameObject.SetActive (true);
 				taskObject.transform.FindChild ("questMarker").gameObject.SetActive (false);
 				desc = descOption2;
+				tasksClass.setText ();
 			}
 		}
 	}
@@ -65,6 +68,7 @@ public class Task {
 			activated = true;
 			tasksClass.tasksActive++;
 			Debug.Log ("Added");
+			tasksClass.setText ();
 		} else if (active == false && activated == true) {
 			activated = false;
 			tasksClass.tasksActive--;
@@ -75,11 +79,13 @@ public class Task {
 			complete = true;
 			desc = "";
 			tasksClass.tasksCompleted++;
+			//tasksClass.tasksDisplayed--;
 			active = false;
 			GameObject.Destroy (taskObject);
 			target.transform.FindChild ("questMarker").gameObject.SetActive (false);
 			held = false;
 			shootScript.hasObject = false;
+			tasksClass.setText ();
 		}
 
 		if (taskObject != null && taskObject.GetComponent<pickUp>() != null) {
@@ -111,8 +117,9 @@ public class Tasks : MonoBehaviour {
 	public Text taskDesc2;
 	public Text taskDesc3;
 	public int tasksCompleted = 0;
-
 	public int tasksActive;
+
+	public int tasksDisplayed;
 	// Use this for initialization
 	void Start () {
 		foreach (Task element in playerTasks) {
@@ -125,50 +132,75 @@ public class Tasks : MonoBehaviour {
 	void Update () {
 		setText ();
 		foreach (Task element in playerTasks) {
-			element.setMarker ();
 			element.checkHeld ();
 			element.checkNextTask ();
+			element.setMarker ();
 		}
 	}
-	void setText () {
+	public void setText () {
+		
+		//print ("Case2");
 		foreach (Task element in playerTasks) {
-			if (playerTasks[0].completed == true)
-			taskDesc1.text = "";
-			taskDesc2.text = "";
-			taskDesc3.text = "";
+			
+			//if (playerTasks[0].completed == true)
+			//taskDesc1.text = "";
+			//taskDesc2.text = "";
+			//taskDesc3.text = "";
 			int index = Array.IndexOf (playerTasks, element);
-			Text textUsed = null;
+
 			if (index != 0) {
 
 				if (element.active == true) {
+					if (element.displayed == false) {
+						element.displayed = true;
+					}
 					switch (tasksActive) {
 					case 1:
+						print ("Case1");
 						taskDesc1.text = element.desc;
-						if (textUsed != null)
-							textUsed.text = "";
-						textUsed = taskDesc1;
+						taskDesc2.text = "";
+						taskDesc3.text = "";
+
 						break;
 					case 2:
-						taskDesc2.text = element.desc;
-						if (textUsed != null)
-							textUsed.text = "";
-						textUsed = taskDesc2;
+						print ("Case2");
+						taskDesc3.text = "";
+						if (tasksDisplayed == 0) {
+							taskDesc1.text = element.desc;
+						} else if (tasksDisplayed == 1) {
+							taskDesc2.text = element.desc;
+						} else {
+							print(tasksDisplayed.ToString());
+						}
+
 						break;
 					case 3:
-						taskDesc3.text = element.desc;
-						if (textUsed != null)
-							textUsed.text = "";
-						textUsed = taskDesc3;
+						print ("Case3");
+						if (tasksDisplayed == 0) {
+							taskDesc1.text = element.desc;
+						} else if (tasksDisplayed == 1) {
+							taskDesc2.text = element.desc;
+						} else {
+							taskDesc3.text = element.desc;
+						}
 						break;
 					default:
-						Debug.Log (tasksActive.ToString () + " tasks are active, only three tasks may be active");
+						Debug.Log (tasksActive.ToString () + " tasks are active, only upto three tasks may be active");
 						break;
 					}
+					element.displayed = true;
 				}
 			} else if (index == 0 && element.active == true) {
 				taskDesc1.text = element.desc;
 			}
+
+			if (element.active == true && element.completed != true) {
+				tasksDisplayed++;
+			}
 		}
+
+		print(tasksDisplayed.ToString());
+		tasksDisplayed = 0;
 	}
 	public void printError (string message) {
 		Debug.LogError (message);
