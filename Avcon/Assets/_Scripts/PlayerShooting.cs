@@ -18,9 +18,10 @@ public class PlayerShooting : MonoBehaviour {
 	[HideInInspector] public int[] ammoArray;
 	[HideInInspector] public int ammo;
 	[HideInInspector] public bool hasObject;
+	[HideInInspector] public GameObject pickedObject;
+	[HideInInspector] public GameObject objectInHands;
 
 	GameObject currentProjectile;
-	GameObject pickedObject;
 	Transform firePoint;
 	Rigidbody pickedRb;
 	float timeToShoot;
@@ -71,7 +72,7 @@ public class PlayerShooting : MonoBehaviour {
 			prompt.sprite = null;
 			prompt.gameObject.SetActive (false);
 		}
-		if (pickUpHit.collider != null && pickUpHit.collider.gameObject.tag == "PlayerPickUp" && hasObject == false && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0)) {
+		if (pickUpHit.collider != null && pickUpHit.collider.gameObject.tag == "PlayerPickUp" && hasObject == false && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0) && pickUpHit.collider.gameObject.GetComponent<pickUp>().active == true) {
 			pickUp (true);
 		} 
 		else if (hasObject == true && (Input.GetButtonDown ("Fire2") || Input.GetAxis("Fire2") > 0)) {
@@ -80,6 +81,7 @@ public class PlayerShooting : MonoBehaviour {
 
 		if (pickUpHit.collider != null){
 			pickedObject = pickUpHit.collider.gameObject;
+
 			if (pickUpHit.collider.tag == "Interact") {
 				prompt.gameObject.SetActive (true);
 				prompt.sprite = promptSprites [0];
@@ -88,21 +90,19 @@ public class PlayerShooting : MonoBehaviour {
 	}
 
 	public void pickUp(bool pickingUp) {
-		if (pickingUp == true) {
-			pickedObject = pickUpHit.collider.gameObject;
-			pickedRb = pickedObject.GetComponent<Rigidbody> ();
-			pickedObject.transform.position = hands.position;
-			pickedObject.transform.parent = hands;
-		} else {
-			pickedObject.transform.parent = null;
+		if (pickedObject != null && pickedObject.GetComponent<pickUp>().active == true){
+			if (pickingUp == true) {
+				pickedObject = pickUpHit.collider.gameObject;
+				
+				pickedRb = pickedObject.GetComponent<Rigidbody> ();
+				pickedObject.transform.position = hands.position;
+				pickedObject.transform.parent = hands;
+
+			} else {
+				pickedObject.transform.parent = null;
+			}
 		}
-
-
-		pickedRb.useGravity = !pickingUp;
-		pickedRb.isKinematic = pickingUp;
 		hasObject = pickingUp;
-		pickedObject.GetComponent<Collider> ().isTrigger = pickingUp;
-		
 	}
 
 	public void displayProjectile (int ProjectileNum) {

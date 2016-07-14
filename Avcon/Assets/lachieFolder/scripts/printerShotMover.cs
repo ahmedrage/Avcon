@@ -22,6 +22,7 @@ public class printerShotMover : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
+		print ("Test");
 		Destroy (gameObject);
 	}
 
