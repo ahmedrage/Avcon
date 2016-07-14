@@ -53,6 +53,8 @@ public class weaponDrop : MonoBehaviour {
 			if (canSpawn) {
 				StartCoroutine ("timeTillNextWeapon");
 			}
+		} else {
+			pickedUp = false;
 		}
 	}
 
