@@ -1,10 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\lachieFolder\scripts\printerRotate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\lachieFolder\scripts\Rotator.cs">
     <Files>
-      <File FileName="Assets\lachieFolder\scripts\Enemy.cs" Line="175" Column="4" />
-      <File FileName="Assets\lachieFolder\scripts\shotMover.cs" Line="15" Column="35" />
-      <File FileName="Assets\lachieFolder\scripts\weaponDrop.cs" Line="46" Column="21" />
+      <File FileName="Assets\lachieFolder\scripts\Rotator.cs" Line="1" Column="1" />
+      <File FileName="Assets\lachieFolder\scripts\Enemy.cs" Line="1" Column="1" />
+      <File FileName="Assets\lachieFolder\scripts\shotMover.cs" Line="1" Column="1" />
+      <File FileName="Assets\lachieFolder\scripts\weaponDrop.cs" Line="1" Column="1" />
       <File FileName="Assets\lachieFolder\scripts\firstEncounter.cs" Line="1" Column="1" />
       <File FileName="Assets\fearLightingChange.cs" Line="1" Column="1" />
       <File FileName="Assets\closeIn.cs" Line="1" Column="1" />
