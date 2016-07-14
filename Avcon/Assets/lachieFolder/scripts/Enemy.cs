@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		gunPos = GameObject.FindWithTag("Drop").GetComponent<Transform>();
 		Drop = GameObject.FindWithTag("Drop").GetComponent<weaponDrop>();
 		collisionSize = GetComponent<CapsuleCollider> ().radius;
-		playerCollisionSize = player.GetComponent<CapsuleCollider> ().radius;
+		playerCollisionSize = player.GetComponent<CharacterController> ().radius;
 		rb.isKinematic = true;
 		toState (new enemyPatrol ());
 	}

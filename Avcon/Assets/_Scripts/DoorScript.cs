@@ -7,6 +7,8 @@ public class DoorScript : MonoBehaviour {
 	public PlayerShooting shootScript;
 	public Transform Target;
 	public bool transformToTarget; // if true the player is teleporting to the target, otherwise he is teleporting from the target to the transform connected to the script
+	public bool destroyPreviousRoom;
+	public GameObject previousRoom;
 
 	AudioSource doorAudio;
 
@@ -19,7 +21,7 @@ public class DoorScript : MonoBehaviour {
 		if (Vector3.Distance (transform.position, Player.transform.position) < range && Input.GetButtonDown("Fire3")) {
 			transformToTarget = true;
 			Teleport();
-		} else if (Vector3.Distance (Target.position, Player.transform.position) < range && Input.GetButtonDown("Fire3")) {
+		} else if (Vector3.Distance (Target.position, Player.transform.position) < range && Input.GetButtonDown("Fire3") && destroyPreviousRoom == false) {
 			print ("Test");
 			transformToTarget = false;
 			Teleport ();
@@ -39,6 +41,10 @@ public class DoorScript : MonoBehaviour {
 			if (Player.transform.FindChild("FirstPersonCharacter").FindChild("Hands").childCount > 0) {
 				Player.transform.FindChild("FirstPersonCharacter").FindChild("Hands").GetChild(0).position = transform.position;
 			}
+		}
+
+		if (destroyPreviousRoom == true) {
+			Destroy (previousRoom);
 		}
 	}
 }
