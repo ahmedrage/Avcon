@@ -10,16 +10,19 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public float meleeSpeed;
 	public int health;
 	public int damageAmount;
+	public int meleeDamage = 1;
 	public bool seen; 
 	public bool alert; 
 	public bool sightLine;
 	public bool hasWeapon;
-	public bool blocked; 
+	public bool blocked;
+	public bool meleeHit;
 	public Rigidbody rb;
 	public NavMeshAgent pathFinder;
 	public Transform[] patrolPoints;
 	public Transform endPos;
 	public Transform throwPos;
+	public Transform meleePos;
 	public Transform gunPos; 
 	public Transform player;
 	public Transform shotSpawn;
@@ -244,6 +247,13 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			percent += Time.deltaTime * meleeSpeed;
 			float interpolation = (-Mathf.Pow(percent,2)+ percent)*4;
 			transform.position = Vector3.Lerp (currentPos, targetPos, interpolation);
+			meleeHit = Physics.Linecast (transform.position + transform.up, meleePos.position, 1 << LayerMask.NameToLayer ("Player"));
+
+			if (meleeHit) {
+				player.GetComponent<PlayerShooting> ().health -= meleeDamage;
+				meleeHit = false;
+
+			}
 
 			yield return null;
 		}

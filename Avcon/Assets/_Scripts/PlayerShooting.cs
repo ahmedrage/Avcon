@@ -16,7 +16,7 @@ public class PlayerShooting : MonoBehaviour {
 	public GameObject[] shootObjects;
 	public Sprite[] promptSprites;
 	public bool infiniteAmmo;
-	public int health = 100;
+	public int health = 150;
 
 	[HideInInspector] public int[] ammoArray;
 	[HideInInspector] public int ammo;
