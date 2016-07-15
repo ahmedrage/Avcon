@@ -9,11 +9,13 @@ public class PlayerShooting : MonoBehaviour {
 	public float pickUpRange;
 	public Transform CastStart;
 	public Transform hands;
+	public AudioSource pickupSound;
 	public Image prompt;
 	public LayerMask mask;
 	public AudioSource Shoot;
 	public GameObject[] shootObjects;
 	public Sprite[] promptSprites;
+	public bool infiniteAmmo;
 
 	[HideInInspector] public int[] ammoArray;
 	[HideInInspector] public int ammo;
@@ -30,9 +32,13 @@ public class PlayerShooting : MonoBehaviour {
 	screenShake shakeScript;
 
 	void Start () {
+		GetComponent<CapsuleCollider> ().radius = GetComponent<CharacterController> ().radius;
+		GetComponent<CapsuleCollider> ().height = GetComponent<CharacterController> ().height;
 		ammoArray = new int[3];
 		firePoint = GameObject.Find ("FirePoint").transform;
 		shakeScript = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<screenShake> ();
+		Vector3 firePointPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, Camera.main.nearClipPlane) );
+		CastStart.position = firePointPosition;
 	}
 
 	void Awake() {
@@ -40,7 +46,7 @@ public class PlayerShooting : MonoBehaviour {
 	}
 	void Update () {
 		rayCasting ();
-		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && ammo > 0 && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0)) {
+		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0) ) {
 			shoot ();
 		}
 		if(pickUpHit.collider != null)
@@ -97,7 +103,7 @@ public class PlayerShooting : MonoBehaviour {
 				pickedRb = pickedObject.GetComponent<Rigidbody> ();
 				pickedObject.transform.position = hands.position;
 				pickedObject.transform.parent = hands;
-
+				pickupSound.Play ();
 			} else {
 				pickedObject.transform.parent = null;
 			}
@@ -110,7 +116,7 @@ public class PlayerShooting : MonoBehaviour {
 			Destroy (currentProjectile);
 		}
 		currentProjectileNum = ProjectileNum;
-		currentProjectile = Instantiate (shootObjects [ammoArray [ammo - 1]], firePoint.position, firePoint.rotation) as GameObject;
+		currentProjectile = Instantiate (shootObjects [ammoArray [ammo - 1]], GameObject.Find("displayPlace").transform.position, firePoint.rotation) as GameObject;
 		currentProjectile.transform.parent = firePoint;
 		Destroy(currentProjectile.GetComponent<projectile>());
 	}

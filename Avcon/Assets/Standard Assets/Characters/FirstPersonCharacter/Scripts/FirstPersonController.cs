@@ -41,7 +41,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-
+		private float firstX;
+		private float firstY;
         // Use this for initialization
         private void Start()
         {
@@ -55,12 +56,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+			firstX = m_MouseLook.XSensitivity;
+			firstY = m_MouseLook.YSensitivity;
         }
 
 
         // Update is called once per frame
         private void Update()
         {
+			if (Time.timeScale == 0) {
+				m_MouseLook.XSensitivity = 0;
+				m_MouseLook.YSensitivity = 0;
+			} else {
+				m_MouseLook.XSensitivity = firstX;
+				m_MouseLook.YSensitivity = firstY;
+			}
+
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)

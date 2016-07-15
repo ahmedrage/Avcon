@@ -103,6 +103,7 @@
      <Compile Include="Assets\_Scripts\rotationScript.cs" />
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
+     <Compile Include="Assets\endLevel.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CRTEnemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Enemy.cs" />
@@ -126,6 +127,7 @@
      <Compile Include="Assets\lachieFolder\scripts\shotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\weaponDrop.cs" />
      <Compile Include="Assets\playerFollow.cs" />
+     <Compile Include="Assets\printerPick.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />

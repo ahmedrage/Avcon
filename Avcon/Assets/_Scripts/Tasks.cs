@@ -26,6 +26,9 @@ public class Task {
 	bool activated2;
 	float timeToWait;
 	public bool displayed;
+
+
+
 	PlayerShooting shootScript;
 
 	public void setMarker () {
@@ -65,6 +68,7 @@ public class Task {
 	}
 	public void checkNextTask() {
 		if (active == true && activated == false) {
+			tasksClass.audioStart.Play ();
 			activated = true;
 			tasksClass.tasksActive++;
 			Debug.Log ("Added");
@@ -118,24 +122,32 @@ public class Tasks : MonoBehaviour {
 	public Text taskDesc3;
 	public int tasksCompleted = 0;
 	public int tasksActive;
-
+	public AudioSource audioStart;
 	public int tasksDisplayed;
 	// Use this for initialization
-	void Start () {
-		foreach (Task element in playerTasks) {
-			element.tasksClass = transform.GetComponent<Tasks> ();
-			element.setValues ();
-		}
-	}
 	void Awake() { 
 	}
 	void Update () {
 		setText ();
+	}
+
+	void taskUpdate() {
 		foreach (Task element in playerTasks) {
 			element.checkHeld ();
 			element.checkNextTask ();
 			element.setMarker ();
 		}
+		
+	}
+
+	void Start () {
+
+		foreach (Task element in playerTasks) {
+			element.tasksClass = transform.GetComponent<Tasks> ();
+			element.setValues ();
+		}
+		InvokeRepeating ("taskUpdate", 0, 0.1f);
+
 	}
 	public void setText () {
 		
