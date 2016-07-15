@@ -28,4 +28,9 @@ public class menuScript : MonoBehaviour {
 	public void Exit() {
 		Application.Quit ();
 	}
+
+	public void Restart() {
+		Application.LoadLevel (0);
+		Time.timeScale = 1;
+	}
 }

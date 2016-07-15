@@ -53,7 +53,7 @@ public class Task {
 		}
 
 		if (taskObject != null && taskObject.transform.parent != null) {
-			held = taskObject.transform.parent.CompareTag ("Player");
+			held = taskObject.transform.parent.CompareTag ("Hands");
 		} else if (taskObject == null || taskObject.transform.parent == null) {
 			held = false;
 		}
@@ -124,19 +124,29 @@ public class Tasks : MonoBehaviour {
 	public int tasksActive;
 	public AudioSource audioStart;
 	public int tasksDisplayed;
+	public Light Scenelight;
+
+	bool ending;
+	bool ended;
 	// Use this for initialization
 	void Awake() { 
 	}
 	void Update () {
-		setText ();
-	}
+		if (ending == true && ended == false) {
+			ended = true;
+			//Scenelight.color 
+		}
 
-	void taskUpdate() {
+		setText ();
 		foreach (Task element in playerTasks) {
 			element.checkHeld ();
 			element.checkNextTask ();
 			element.setMarker ();
 		}
+	}
+
+	void taskUpdate() {
+
 		
 	}
 
@@ -213,6 +223,13 @@ public class Tasks : MonoBehaviour {
 
 		print(tasksDisplayed.ToString());
 		tasksDisplayed = 0;
+
+		if (tasksCompleted >= playerTasks.Length) {
+			taskDesc1.text = "Go to boss' office";
+			taskDesc2.text = "";
+			taskDesc3.text = "";
+			ending = true;
+		}
 	}
 	public void printError (string message) {
 		Debug.LogError (message);

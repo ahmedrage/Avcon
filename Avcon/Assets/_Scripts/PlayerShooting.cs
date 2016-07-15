@@ -16,6 +16,7 @@ public class PlayerShooting : MonoBehaviour {
 	public GameObject[] shootObjects;
 	public Sprite[] promptSprites;
 	public bool infiniteAmmo;
+	public int health = 100;
 
 	[HideInInspector] public int[] ammoArray;
 	[HideInInspector] public int ammo;
@@ -32,8 +33,6 @@ public class PlayerShooting : MonoBehaviour {
 	screenShake shakeScript;
 
 	void Start () {
-		GetComponent<CapsuleCollider> ().radius = GetComponent<CharacterController> ().radius;
-		GetComponent<CapsuleCollider> ().height = GetComponent<CharacterController> ().height;
 		ammoArray = new int[3];
 		firePoint = GameObject.Find ("FirePoint").transform;
 		shakeScript = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<screenShake> ();
@@ -45,6 +44,10 @@ public class PlayerShooting : MonoBehaviour {
 		
 	}
 	void Update () {
+		if (health <= 0) {
+			Application.LoadLevel (Application.loadedLevel);
+		}
+
 		rayCasting ();
 		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0) ) {
 			shoot ();
@@ -120,4 +123,5 @@ public class PlayerShooting : MonoBehaviour {
 		currentProjectile.transform.parent = firePoint;
 		Destroy(currentProjectile.GetComponent<projectile>());
 	}
+		
 }
