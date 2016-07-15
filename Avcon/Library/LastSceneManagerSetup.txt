@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/lachieFolder/scenes/scenes/scene_001.unity
+- path: Assets/_Scenes/OneStart.unity
   isLoaded: 1
   isActive: 1
