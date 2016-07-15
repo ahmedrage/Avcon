@@ -32,7 +32,9 @@ public class projectile : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		smash.Play ();
-		//take health
+		if (other.gameObject.tag == "Enemy") {
+			other.gameObject.GetComponent<Enemy> ().health -= damage;
+		}
 		Destroy (gameObject);
 	}
 

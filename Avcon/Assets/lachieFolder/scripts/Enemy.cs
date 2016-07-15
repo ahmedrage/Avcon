@@ -47,8 +47,8 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		rb = GetComponent<Rigidbody> ();
 		pathFinder = GetComponent<NavMeshAgent> ();
 		player = GameObject.FindWithTag ("Player").GetComponent<Transform> ();
-		gunPos = GameObject.FindWithTag("Drop").GetComponent<Transform>();
-		Drop = GameObject.FindWithTag("Drop").GetComponent<weaponDrop>();
+		//gunPos = GameObject.FindWithTag("Drop").GetComponent<Transform>();
+		//Drop = GameObject.FindWithTag("Drop").GetComponent<weaponDrop>();
 		collisionSize = GetComponent<CapsuleCollider> ().radius;
 		playerCollisionSize = player.GetComponent<CharacterController> ().radius;
 		rb.isKinematic = true;
@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			weapon = other.gameObject;
 		}
 
-		if (other.gameObject.tag == "Shot") {
+		if (other.gameObject.tag == "Projectile") {
 			health -= damageAmount;
 		}
 	}
