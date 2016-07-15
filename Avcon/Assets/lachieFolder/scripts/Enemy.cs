@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	private float weaponDistance;
 
 
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -100,10 +101,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		if (alert == true) {
 			radius = 7;
 			timeTillSeen -= Time.deltaTime;
-		} /*else {
-			radius = 3;
-			timeTillSeen = 2;
-		}*/
+		}
 
 		if (timeTillSeen <= 0.0f) {
 			seen = true;
