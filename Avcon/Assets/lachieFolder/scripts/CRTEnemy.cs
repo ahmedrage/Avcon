@@ -7,12 +7,12 @@ public class CRTEnemy : MonoBehaviour {
 	public Transform player;
 	public Rigidbody rb;
 	public float radius;
-	public float meleeSpeed = 2;
+	public float meleeSpeed = 3;
 	public bool alert;
 
 	private float attackDistance = 1.7f;
 	private float throwDistance;
-	private float timeBetweenAttacks = 0.5f;
+	private float timeBetweenAttacks = 1f;
 	private float nextAttackTime;
 	private float collisionSize;
 	private float playerCollisionSize;
@@ -26,14 +26,13 @@ public class CRTEnemy : MonoBehaviour {
 		player = GameObject.FindWithTag ("Player").GetComponent<Transform> ();
 		pathFinder = GetComponent<NavMeshAgent> ();
 		collisionSize = GetComponent<CapsuleCollider> ().radius;
-		playerCollisionSize = player.GetComponent<CapsuleCollider> ().radius;
+		playerCollisionSize = player.GetComponent<CharacterController> ().radius;
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		meleeDistance = Vector3.Distance (transform.position, player.position);
-
 		Alert ();
 		Attack ();
 		Chasing ();
@@ -44,10 +43,8 @@ public class CRTEnemy : MonoBehaviour {
 	{
 		Collider[] colliders = Physics.OverlapSphere (transform.position + transform.up, radius, 1 << LayerMask.NameToLayer ("Player"));
 		alert = colliders.Length > 0;
+		transform.LookAt (player.position - transform.up);
 
-		/*if (alert) {
-			Chasing ();	
-		}*/
 	}
 
 	void Chasing()

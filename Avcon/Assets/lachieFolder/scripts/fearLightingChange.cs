@@ -11,7 +11,7 @@ public class fearLightingChange : MonoBehaviour {
 	void Start () 
 	{
 		spot = GetComponent<Light> ();
-		enemy = GameObject.FindWithTag ("Enemy").GetComponent<Enemy> ();
+		//enemy = GameObject.FindWithTag ("Enemy").GetComponent<Enemy> ();
 	
 	}
 	

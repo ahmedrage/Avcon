@@ -20,9 +20,9 @@ public class Spawn : MonoBehaviour {
 	bool hit;
 
 	void Start(){
-		NextWave ();
+		//NextWave ();
 		//StartCoroutine ("enemyCheck");
-		InvokeRepeating("EnemyCheck",2,0.25f);
+		//InvokeRepeating("EnemyCheck",2,0.25f);
 	}
 
 	void Update () {
@@ -43,6 +43,10 @@ public class Spawn : MonoBehaviour {
 			Instantiate (Enemy, transform.position, Quaternion.identity);
 			transform.position = changedPos;
 		}
+
+		if (enemiesRemaining.Length == 0) {
+			NextWave ();
+		}
 	}
 
 	void NextWave (){
@@ -53,12 +57,12 @@ public class Spawn : MonoBehaviour {
 		}
 	}
 
-	void EnemyCheck()
+	/*void EnemyCheck()
 	{
 		if (enemiesRemaining.Length == 0) {
 			NextWave ();
 		}
-	}
+	}*/
 
 	[System.Serializable]
 	public class Wave {

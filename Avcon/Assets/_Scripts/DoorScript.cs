@@ -9,6 +9,8 @@ public class DoorScript : MonoBehaviour {
 	public bool transformToTarget; // if true the player is teleporting to the target, otherwise he is teleporting from the target to the transform connected to the script
 	public bool destroyPreviousRoom;
 	public GameObject previousRoom;
+	public GameObject nextRoomEnemies;
+	public GameObject nextRoomSpawn;
 
 	AudioSource doorAudio;
 
@@ -45,6 +47,8 @@ public class DoorScript : MonoBehaviour {
 
 		if (destroyPreviousRoom == true) {
 			Destroy (previousRoom);
+			nextRoomEnemies.SetActive (true);
+			nextRoomSpawn.SetActive (true);
 		}
 	}
 }
