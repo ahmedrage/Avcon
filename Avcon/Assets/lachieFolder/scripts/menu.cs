@@ -4,6 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class menu : MonoBehaviour {
 
+	public void Update(){
+		if (Input.GetButtonDown ("Fire3")) {
+			StartCoroutine ("playDelay");
+		}
+	}
+
 	public void Play(){
 		StartCoroutine ("playDelay");
 	}
