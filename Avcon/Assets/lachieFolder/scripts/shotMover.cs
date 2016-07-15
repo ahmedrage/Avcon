@@ -6,6 +6,7 @@ public class shotMover : MonoBehaviour {
 	public float speed;
 	public float timeTillDeath;
 	private float rotateSpeed = 1;
+	public int damage;
 
 	public Rigidbody rb;
 
@@ -34,6 +35,7 @@ public class shotMover : MonoBehaviour {
 			//rb.isKinematic = false;
 			Destroy(this.gameObject);
 			print ("player hit");
+			other.gameObject.GetComponent<PlayerShooting> ().health -= damage;
 		}
 	}
 }
