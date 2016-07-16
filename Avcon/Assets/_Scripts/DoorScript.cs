@@ -46,7 +46,9 @@ public class DoorScript : MonoBehaviour {
 		if (destroyPreviousRoom == true && previousRoom != null) {
 			Destroy (previousRoom);
 			nextRoomEnemies.SetActive (true);
-			nextRoomSpawn.SetActive (true);
+			if (nextRoomSpawn != null) {
+				nextRoomSpawn.SetActive (true);
+			}
 		}
 	}
 }

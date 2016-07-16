@@ -34,6 +34,7 @@ public class projectile : MonoBehaviour {
 		smash.Play ();
 		if (other.gameObject.tag == "Enemy") {
 			other.gameObject.GetComponent<Enemy> ().health -= damage;
+			//other.gameObject.GetComponent<CRTEnemy> ().health -= damage;
 		}
 		Destroy (gameObject);
 	}

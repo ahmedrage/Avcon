@@ -10,6 +10,7 @@ public class CRTEnemy : MonoBehaviour {
 	public float radius;
 	public float meleeSpeed = 3;
 	public int meleeDamage = 5;
+	public int health;
 	public bool alert;
 	public bool meleeHit;
 
@@ -39,6 +40,10 @@ public class CRTEnemy : MonoBehaviour {
 		Alert ();
 		Attack ();
 		Chasing ();
+
+		if (health <= 0) {
+			Destroy (gameObject);
+		}
 	}
 
 

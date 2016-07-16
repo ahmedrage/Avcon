@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class printerRotate : MonoBehaviour {
 
@@ -16,6 +17,7 @@ public class printerRotate : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player") {
 			spotlight.enabled = true;
+			SceneManager.LoadScene ("mainMenu");
 		} 		
 	}
 }

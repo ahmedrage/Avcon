@@ -28,7 +28,11 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public Transform shotSpawn;
 	public Vector3 prevPlayerPos;
 	public weaponDrop Drop;
+	public GameObject deathParticle;
 	public GameObject weapon;
+	public Color A = Color.red;
+	public Color B = Color.white;
+
 	//public GameObject deathParticle;
 
 	private IEnemystate currentState;
@@ -72,10 +76,14 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 		Seen ();
 		lineOfSight ();
-		Destroy ();
 		Attack ();
 		Pickup ();
 		obstacleCheck ();
+
+		if (health <= 0) {
+			Instantiate (deathParticle, transform.position, transform.rotation); 
+			Destroy (gameObject);
+		}
 	}
 		
 	public void toState(IEnemystate nextState)
@@ -146,18 +154,21 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		}
 
 		if (other.gameObject.tag == "Projectile") {
-			health -= damageAmount;
+			A = B;
+			//StartCoroutine ();
 		}
 	}
 
 	public void Pickup()
 	{
-		if (hasWeapon == true) {
-			weapon.transform.position = shotSpawn.transform.position;
-			weapon.transform.rotation = shotSpawn.transform.rotation;
-			weapon.transform.parent = shotSpawn.transform;
-		} else {
-			weapon.transform.parent = null;
+		if (weapon != null) {
+			if (hasWeapon == true) {
+				weapon.transform.position = shotSpawn.transform.position;
+				weapon.transform.rotation = shotSpawn.transform.rotation;
+				weapon.transform.parent = shotSpawn.transform;
+			} else {
+				weapon.transform.parent = null;
+			}
 		}
 	}
 		
@@ -189,15 +200,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		}
 	}
 
-	public void Destroy()
-	{
-		if (health <= 0) {
-			Destroy (gameObject);
-			//Instantiate (deathParticle, transform.position, transform.rotation); when a particle is instantiated does it get destroyed? Because if not we are going to need to have a corutine to destroy them(after death).
-			//StartCoroutine("particleDestroy");
-		}
-	}
-
 	public void lastSeen()
 	{
 		pathFinder.SetDestination (prevPlayerPos);
@@ -221,9 +223,12 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	public void longRange()
 	{
-		pathFinder.speed = 0;
-		weapon.GetComponent<shotMover> ().enabled = true;
-		StartCoroutine ("rangedStopTime");
+		 // this could be the cancer bug. that stops the player.
+		if (weapon != null) {
+			pathFinder.speed = 0;
+			weapon.GetComponent<shotMover> ().enabled = true;
+			StartCoroutine ("rangedStopTime");
+		}
 	}
 
 	IEnumerator rangedStopTime()
@@ -266,7 +271,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		yield return new WaitForSeconds (1f);
 		toState (new enemyPatrol ());
 	}
-
+		
 	/*IEnumerator particleDestroy()
 	{
 		yield return new WaitForSeconds ();

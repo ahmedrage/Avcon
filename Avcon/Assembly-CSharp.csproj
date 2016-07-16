@@ -127,6 +127,7 @@
      <Compile Include="Assets\lachieFolder\scripts\printerShotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\shotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\weaponDrop.cs" />
+     <Compile Include="Assets\mouseChange.cs" />
      <Compile Include="Assets\playerFollow.cs" />
      <Compile Include="Assets\printerPick.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

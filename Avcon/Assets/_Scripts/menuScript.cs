@@ -18,6 +18,10 @@ public class menuScript : MonoBehaviour {
 			Resume ();
 
 		}
+
+		if (Input.GetKeyDown (KeyCode.R)) {
+			Application.LoadLevel (Application.loadedLevel);
+		}
 	}
 
 	public void Resume () {
