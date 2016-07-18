@@ -17,7 +17,6 @@ public class printerRotate : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player") {
 			spotlight.enabled = true;
-			SceneManager.LoadScene ("mainMenu");
 		} 		
 	}
 }

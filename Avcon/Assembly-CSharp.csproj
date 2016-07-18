@@ -94,6 +94,7 @@
      <Compile Include="Assets\_Scripts\DoorScript.cs" />
      <Compile Include="Assets\_Scripts\PlayerShooting.cs" />
      <Compile Include="Assets\_Scripts\Tasks.cs" />
+     <Compile Include="Assets\_Scripts\Timer.cs" />
      <Compile Include="Assets\_Scripts\cameraFollow.cs" />
      <Compile Include="Assets\_Scripts\enemyScript.cs" />
      <Compile Include="Assets\_Scripts\menuScript.cs" />
@@ -103,6 +104,8 @@
      <Compile Include="Assets\_Scripts\rotationScript.cs" />
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
+     <Compile Include="Assets\bossDeath.cs" />
+     <Compile Include="Assets\endGame.cs" />
      <Compile Include="Assets\endLevel.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CRTEnemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
@@ -116,6 +119,7 @@
      <Compile Include="Assets\lachieFolder\scripts\enemyPatrol.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemySeen.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyWeapon.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\fadeScreen.cs" />
      <Compile Include="Assets\lachieFolder\scripts\fearLightingChange.cs" />
      <Compile Include="Assets\lachieFolder\scripts\firstEncounter.cs" />
      <Compile Include="Assets\lachieFolder\scripts\levelGenTest.cs" />
@@ -127,7 +131,6 @@
      <Compile Include="Assets\lachieFolder\scripts\printerShotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\shotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\weaponDrop.cs" />
-     <Compile Include="Assets\mouseChange.cs" />
      <Compile Include="Assets\playerFollow.cs" />
      <Compile Include="Assets\printerPick.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

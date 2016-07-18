@@ -44,9 +44,9 @@ public class PlayerShooting : MonoBehaviour {
 		
 	}
 	void Update () {
-		if (health <= 0) {
+		/*if (health <= 0) {
 			Application.LoadLevel (Application.loadedLevel);
-		}
+		}*/
 
 		rayCasting ();
 		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0) ) {
@@ -77,10 +77,6 @@ public class PlayerShooting : MonoBehaviour {
 		Physics.Raycast (CastStart.position, forward, out pickUpHit, pickUpRange, mask);
 		Debug.DrawRay (CastStart.position, forward);
 
-		if (pickUpHit.collider == null || pickUpHit.collider.tag != "Interact") {
-			prompt.sprite = null;
-			prompt.gameObject.SetActive (false);
-		}
 		if (pickUpHit.collider != null && pickUpHit.collider.gameObject.tag == "PlayerPickUp" && hasObject == false && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0) && pickUpHit.collider.gameObject.GetComponent<pickUp>().active == true) {
 			pickUp (true);
 		} 
@@ -88,18 +84,29 @@ public class PlayerShooting : MonoBehaviour {
 			pickUp (false);
 		}
 
-		if (pickUpHit.collider != null){
+		if (pickUpHit.collider != null) {
 			pickedObject = pickUpHit.collider.gameObject;
 
 			if (pickUpHit.collider.tag == "Interact") {
 				prompt.gameObject.SetActive (true);
+				prompt.rectTransform.sizeDelta = new Vector2 (prompt.rectTransform.sizeDelta.x, 100);
 				prompt.sprite = promptSprites [0];
+			} else if (pickUpHit.collider.tag == "PlayerPickUp" && hasObject == false) {
+				prompt.gameObject.SetActive (true);
+				prompt.rectTransform.sizeDelta = new Vector2 (prompt.rectTransform.sizeDelta.x, 150);
+				prompt.sprite = promptSprites [1];
+			} else {
+				prompt.sprite = null;
+				prompt.gameObject.SetActive (false);
 			}
+		} else {
+			prompt.sprite = null;
+			prompt.gameObject.SetActive (false);
 		}
 	}
 
 	public void pickUp(bool pickingUp) {
-		if (pickedObject != null && pickedObject.GetComponent<pickUp>().active == true){
+		if (pickedObject != null && pickedObject.GetComponent<pickUp>() !=  null){
 			if (pickingUp == true) {
 				pickedObject = pickUpHit.collider.gameObject;
 				

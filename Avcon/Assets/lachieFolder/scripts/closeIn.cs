@@ -5,7 +5,10 @@ public class closeIn : MonoBehaviour {
 
 	public MeshRenderer mesh;
 	public BoxCollider box;
+	public BoxCollider blockBox;
+	public BoxCollider blockBox2;
 	public GameObject objects;
+	public CharacterController player;
 	public Light spot;
 	public Light redSpot;
 
@@ -13,7 +16,8 @@ public class closeIn : MonoBehaviour {
 	void Start () 
 	{
 		mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-		box = GetComponent<BoxCollider> ();
+		player = GameObject.FindWithTag ("Player").GetComponent<CharacterController> ();
+
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -40,6 +44,9 @@ public class closeIn : MonoBehaviour {
 		yield return new WaitForSeconds (0.3f);
 		spot.enabled = true;
 		objects.SetActive (true);
+		blockBox.isTrigger = true;
+		blockBox2.isTrigger = true;
+		Destroy (this);
 
 	}
 }

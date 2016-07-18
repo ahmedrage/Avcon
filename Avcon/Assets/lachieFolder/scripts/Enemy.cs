@@ -30,8 +30,9 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public weaponDrop Drop;
 	public GameObject deathParticle;
 	public GameObject weapon;
-	public Color A = Color.red;
-	public Color B = Color.white;
+	public Material normal;
+	public Material hit;
+
 
 	//public GameObject deathParticle;
 
@@ -153,9 +154,14 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			weapon = other.gameObject;
 		}
 
-		if (other.gameObject.tag == "Projectile") {
-			A = B;
-			//StartCoroutine ();
+
+	}
+
+	public void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "playerShot" && other.gameObject.GetComponent<projectile>() != null) {
+			gameObject.GetComponent<Renderer>().material = hit;
+			StartCoroutine ("shotFlash");
 		}
 	}
 
@@ -272,9 +278,9 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		toState (new enemyPatrol ());
 	}
 		
-	/*IEnumerator particleDestroy()
+	IEnumerator shotFlash()
 	{
-		yield return new WaitForSeconds ();
-		Destroy (deathParticle);
-	}*/
+		yield return new WaitForSeconds (0.1f);
+		gameObject.GetComponent<Renderer> ().material = normal;
+	}
 }				
