@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using XInputDotNetPure;
 using System.Collections;
 
 public class Enemy : MonoBehaviour // buggy as fuck
@@ -8,6 +9,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public float timeTillSeen;
 	public float waitTimeRanged;
 	public float meleeSpeed;
+	public float vibrateTime = 0.3f;
 	public int health;
 	public int damageAmount;
 	public int meleeDamage = 1;
@@ -263,7 +265,8 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			if (meleeHit) {
 				player.GetComponent<PlayerShooting> ().health -= meleeDamage;
 				meleeHit = false;
-
+				GamePad.SetVibration (PlayerIndex.One, 100, 100);
+				StartCoroutine ("vibrationTime");
 			}
 
 			yield return null;
@@ -282,5 +285,11 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	{
 		yield return new WaitForSeconds (0.1f);
 		gameObject.GetComponent<Renderer> ().material = normal;
+	}
+
+	IEnumerator vibrationTime()
+	{
+		yield return new WaitForSeconds (vibrateTime);
+		GamePad.SetVibration (PlayerIndex.One, 0, 0);
 	}
 }				

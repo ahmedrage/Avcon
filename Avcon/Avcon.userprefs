@@ -1,11 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\endGame.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\lachieFolder\scripts\Enemy.cs">
     <Files>
-      <File FileName="Assets\lachieFolder\scripts\fadeScreen.cs" Line="65" Column="1" />
-      <File FileName="Assets\endGame.cs" Line="25" Column="25" />
-      <File FileName="Assets\lachieFolder\scripts\Enemy.cs" Line="1" Column="1" />
-      <File FileName="Assets\bossDeath.cs" Line="15" Column="20" />
+      <File FileName="Assets\_Scripts\PlayerShooting.cs" Line="11" Column="26" />
+      <File FileName="Assets\lachieFolder\scripts\Enemy.cs" Line="12" Column="34" />
+      <File FileName="Assets\controllerCheck.cs" Line="2" Column="24" />
+      <File FileName="Assets\lachieFolder\shaders\outLineShader.shader" Line="81" Column="2" />
+      <File FileName="Assets\lachieFolder\scripts\fadeScreen.cs" Line="1" Column="1" />
+      <File FileName="Assets\bossDeath.cs" Line="1" Column="1" />
+      <File FileName="Assets\lachieFolder\scripts\shotMover.cs" Line="38" Column="70" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

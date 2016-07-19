@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using XInputDotNetPure;
 using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour {
@@ -7,6 +8,7 @@ public class PlayerShooting : MonoBehaviour {
 	public bool enableCombat;
 	public float fireRate;
 	public float pickUpRange;
+	public float vibrateTime = 0.3f;
 	public Transform CastStart;
 	public Transform hands;
 	public AudioSource pickupSound;
@@ -49,9 +51,11 @@ public class PlayerShooting : MonoBehaviour {
 		}*/
 
 		rayCasting ();
-		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis("Fire1") > 0) ) {
+		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis ("Fire1") > 0) && GamePad.GetState (PlayerIndex.One).Triggers.Right >= 0.5) {
+			GamePad.SetVibration (PlayerIndex.One, 100, 100);
+			StartCoroutine ("vibrationTime");
 			shoot ();
-		}
+		} 
 		if(pickUpHit.collider != null)
 			print (pickUpHit.collider.gameObject.tag.ToString());
 	}
@@ -105,6 +109,14 @@ public class PlayerShooting : MonoBehaviour {
 		}
 	}
 
+	void OnCollisionEnter( Collision other)
+	{
+		if (other.gameObject.tag == "Pickup") {
+			GamePad.SetVibration (PlayerIndex.One, 100, 100);
+			StartCoroutine ("vibrationTime");
+		}
+	}
+
 	public void pickUp(bool pickingUp) {
 		if (pickedObject != null && pickedObject.GetComponent<pickUp>() !=  null){
 			if (pickingUp == true) {
@@ -129,6 +141,13 @@ public class PlayerShooting : MonoBehaviour {
 		currentProjectile = Instantiate (shootObjects [ammoArray [ammo - 1]], GameObject.Find("displayPlace").transform.position, firePoint.rotation) as GameObject;
 		currentProjectile.transform.parent = firePoint;
 		Destroy(currentProjectile.GetComponent<projectile>());
+	}
+
+
+	IEnumerator vibrationTime()
+	{
+		yield return new WaitForSeconds (vibrateTime);
+		GamePad.SetVibration (PlayerIndex.One, 0, 0);
 	}
 		
 }
