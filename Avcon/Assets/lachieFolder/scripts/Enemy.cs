@@ -35,9 +35,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public Material normal;
 	public Material hit;
 
-
-	//public GameObject deathParticle;
-
 	private IEnemystate currentState;
 	private bool hittingObject;
 	private int points = 0;
@@ -49,8 +46,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	private float playerCollisionSize;
 	private float meleeDistance;
 	private float weaponDistance;
-
-
 
 	// Use this for initialization
 	void Start () 

@@ -106,7 +106,6 @@
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
      <Compile Include="Assets\bossDeath.cs" />
-     <Compile Include="Assets\controllerCheck.cs" />
      <Compile Include="Assets\endLevel.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CRTEnemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
