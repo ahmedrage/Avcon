@@ -133,6 +133,7 @@
      <Compile Include="Assets\lachieFolder\scripts\weaponDrop.cs" />
      <Compile Include="Assets\playerFollow.cs" />
      <Compile Include="Assets\printerPick.cs" />
+     <Compile Include="Assets\promptFade.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
