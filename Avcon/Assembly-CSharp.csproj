@@ -106,6 +106,10 @@
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
      <Compile Include="Assets\endLevel.cs" />
+     <Compile Include="Assets\lachieFolder\menu_Options.cs" />
+     <Compile Include="Assets\lachieFolder\menu_Play.cs" />
+     <Compile Include="Assets\lachieFolder\menu_Quit.cs" />
+     <Compile Include="Assets\lachieFolder\optionsMenu.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CRTEnemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Enemy.cs" />
@@ -123,7 +127,6 @@
      <Compile Include="Assets\lachieFolder\scripts\fearLightingChange.cs" />
      <Compile Include="Assets\lachieFolder\scripts\firstEncounter.cs" />
      <Compile Include="Assets\lachieFolder\scripts\levelGenTest.cs" />
-     <Compile Include="Assets\lachieFolder\scripts\menu.cs" />
      <Compile Include="Assets\lachieFolder\scripts\objectKinematic.cs" />
      <Compile Include="Assets\lachieFolder\scripts\playerController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\playerShotMover.cs" />
