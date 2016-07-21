@@ -18,7 +18,7 @@ public class fearLightingChange : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (enemy.seen) {
+		if (enemy.seen || enemy.enemyHit) {
 			spot.color = Color.Lerp (spot.color, fear, changeRate * Time.deltaTime);
 		}
 	

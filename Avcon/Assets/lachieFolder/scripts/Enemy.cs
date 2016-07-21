@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour // buggy as fuck
 {
-	[Range(0,10)]
+	[Range(0,10)] // alot of the variables dont need to be public, I just have them like that atm for testing.
 	public float radius;
 	public float timeTillSeen;
 	public float waitTimeRanged;
@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	public bool hasWeapon;
 	public bool blocked;
 	public bool meleeHit;
+	public bool enemyHit;
 	public Rigidbody rb;
 	public NavMeshAgent pathFinder;
 	public Transform[] patrolPoints;
@@ -119,7 +120,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			toState (new enemyPatrol ());
 		}
 
-		if (seen == true) {
+		if (seen == true || enemyHit == true) {
 			pathFinder.speed = 4.5f;
 			toState (new enemySeen ());
 		}
@@ -150,8 +151,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			hasWeapon = true;
 			weapon = other.gameObject;
 		}
-
-
 	}
 
 	public void OnTriggerEnter(Collider other)
@@ -159,6 +158,8 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		if (other.gameObject.tag == "playerShot" && other.gameObject.GetComponent<projectile>() != null) {
 			gameObject.GetComponent<Renderer>().material = hit;
 			StartCoroutine ("shotFlash");
+			print ("hit");
+			enemyHit = true; // this just needs to change to false and then if it is true make the enemy alerted.
 		}
 	}
 
@@ -226,7 +227,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	public void longRange()
 	{
-		 // this could be the cancer bug. that stops the player.
 		if (weapon != null) {
 			pathFinder.speed = 0;
 			weapon.GetComponent<shotMover> ().enabled = true;

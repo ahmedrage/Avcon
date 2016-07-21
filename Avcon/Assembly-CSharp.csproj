@@ -105,7 +105,6 @@
      <Compile Include="Assets\_Scripts\rotationScript.cs" />
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
-     <Compile Include="Assets\bossDeath.cs" />
      <Compile Include="Assets\endLevel.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CRTEnemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
@@ -114,6 +113,7 @@
      <Compile Include="Assets\lachieFolder\scripts\Printer.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Rotator.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Spawn.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\bossDeath.cs" />
      <Compile Include="Assets\lachieFolder\scripts\closeIn.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyAttack.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyPatrol.cs" />
@@ -129,11 +129,11 @@
      <Compile Include="Assets\lachieFolder\scripts\playerShotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\printerRotate.cs" />
      <Compile Include="Assets\lachieFolder\scripts\printerShotMover.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\promptFade.cs" />
      <Compile Include="Assets\lachieFolder\scripts\shotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\weaponDrop.cs" />
      <Compile Include="Assets\playerFollow.cs" />
      <Compile Include="Assets\printerPick.cs" />
-     <Compile Include="Assets\promptFade.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
