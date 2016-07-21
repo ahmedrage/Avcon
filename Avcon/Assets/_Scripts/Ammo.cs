@@ -26,7 +26,10 @@ public class Ammo : MonoBehaviour
 	}
 
 	void PickUp()
-	{
+	{ 
+		if (transform.GetComponent<printerRotate>() != null) {
+			Destroy (transform.GetComponent<printerRotate> ());
+		}
 		shootScript.ammo++;
 		shootScript.ammoArray [shootScript.ammo - 1] = ammoType - 1;
 		shootScript.displayProjectile (shootScript.ammoArray [shootScript.ammo - 1]);

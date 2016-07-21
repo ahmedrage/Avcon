@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using XInputDotNetPure;
 using System.Collections;
 
 public class menuScript : MonoBehaviour {
 	public GameObject menu;
+
+	bool paused;
 	// Use this for initialization
 	void Start () {
 		
@@ -16,7 +19,17 @@ public class menuScript : MonoBehaviour {
 			menu.SetActive (true);
 		} else if (Input.GetKeyDown (KeyCode.Escape) && menu.activeSelf == true) {
 			Resume ();
+		}
 
+		if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed && menu.activeSelf == false) {
+			Time.timeScale = 0;
+			menu.SetActive (true);
+		} else if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed && menu.activeSelf == true) {
+			Resume ();
+		}
+			
+		if (Input.GetKeyDown (KeyCode.R)) {
+			Application.LoadLevel (Application.loadedLevel);
 		}
 	}
 

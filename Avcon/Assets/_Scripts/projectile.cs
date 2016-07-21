@@ -14,6 +14,7 @@ public class projectile : MonoBehaviour {
 		shootScript = player.GetComponent<PlayerShooting> ();
 		Physics.IgnoreLayerCollision (8, 8);
 		Physics.IgnoreLayerCollision (8, 12);
+		Physics.IgnoreLayerCollision (8, 14);
 		player = GameObject.FindWithTag ("Player");
 		smash = GameObject.FindGameObjectWithTag ("Gm").GetComponent<AudioSource> ();
 	}
@@ -34,6 +35,7 @@ public class projectile : MonoBehaviour {
 		smash.Play ();
 		if (other.gameObject.tag == "Enemy") {
 			other.gameObject.GetComponent<Enemy> ().health -= damage;
+			//other.gameObject.GetComponent<CRTEnemy> ().health -= damage;
 		}
 		Destroy (gameObject);
 	}

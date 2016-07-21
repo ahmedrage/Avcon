@@ -1,32 +1,40 @@
 ﻿using UnityEngine;
+using XInputDotNetPure;
 using System.Collections;
 
 public class Enemy : MonoBehaviour // buggy as fuck
 {
-	[Range(0,10)]
+	[Range(0,10)] // alot of the variables dont need to be public, I just have them like that atm for testing.
 	public float radius;
 	public float timeTillSeen;
 	public float waitTimeRanged;
 	public float meleeSpeed;
+	public float vibrateTime = 0.3f;
 	public int health;
 	public int damageAmount;
+	public int meleeDamage = 1;
 	public bool seen; 
 	public bool alert; 
 	public bool sightLine;
 	public bool hasWeapon;
-	public bool blocked; 
+	public bool blocked;
+	public bool meleeHit;
+	public bool enemyHit;
 	public Rigidbody rb;
 	public NavMeshAgent pathFinder;
 	public Transform[] patrolPoints;
 	public Transform endPos;
 	public Transform throwPos;
+	public Transform meleePos;
 	public Transform gunPos; 
 	public Transform player;
 	public Transform shotSpawn;
 	public Vector3 prevPlayerPos;
 	public weaponDrop Drop;
+	public GameObject deathParticle;
 	public GameObject weapon;
-	//public GameObject deathParticle;
+	public Material normal;
+	public Material hit;
 
 	private IEnemystate currentState;
 	private bool hittingObject;
@@ -39,8 +47,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 	private float playerCollisionSize;
 	private float meleeDistance;
 	private float weaponDistance;
-
-
 
 	// Use this for initialization
 	void Start () 
@@ -69,10 +75,14 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 		Seen ();
 		lineOfSight ();
-		Destroy ();
 		Attack ();
 		Pickup ();
 		obstacleCheck ();
+
+		if (health <= 0) {
+			Instantiate (deathParticle, transform.position, transform.rotation); 
+			Destroy (gameObject);
+		}
 	}
 		
 	public void toState(IEnemystate nextState)
@@ -110,7 +120,7 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			toState (new enemyPatrol ());
 		}
 
-		if (seen == true) {
+		if (seen == true || enemyHit == true) {
 			pathFinder.speed = 4.5f;
 			toState (new enemySeen ());
 		}
@@ -141,20 +151,28 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			hasWeapon = true;
 			weapon = other.gameObject;
 		}
+	}
 
-		if (other.gameObject.tag == "Projectile") {
-			health -= damageAmount;
+	public void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "playerShot" && other.gameObject.GetComponent<projectile>() != null) {
+			gameObject.GetComponent<Renderer>().material = hit;
+			StartCoroutine ("shotFlash");
+			print ("hit");
+			enemyHit = true; // this just needs to change to false and then if it is true make the enemy alerted.
 		}
 	}
 
 	public void Pickup()
 	{
-		if (hasWeapon == true) {
-			weapon.transform.position = shotSpawn.transform.position;
-			weapon.transform.rotation = shotSpawn.transform.rotation;
-			weapon.transform.parent = shotSpawn.transform;
-		} else {
-			weapon.transform.parent = null;
+		if (weapon != null) {
+			if (hasWeapon == true) {
+				weapon.transform.position = shotSpawn.transform.position;
+				weapon.transform.rotation = shotSpawn.transform.rotation;
+				weapon.transform.parent = shotSpawn.transform;
+			} else {
+				weapon.transform.parent = null;
+			}
 		}
 	}
 		
@@ -186,15 +204,6 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		}
 	}
 
-	public void Destroy()
-	{
-		if (health <= 0) {
-			Destroy (gameObject);
-			//Instantiate (deathParticle, transform.position, transform.rotation); when a particle is instantiated does it get destroyed? Because if not we are going to need to have a corutine to destroy them(after death).
-			//StartCoroutine("particleDestroy");
-		}
-	}
-
 	public void lastSeen()
 	{
 		pathFinder.SetDestination (prevPlayerPos);
@@ -218,9 +227,11 @@ public class Enemy : MonoBehaviour // buggy as fuck
 
 	public void longRange()
 	{
-		pathFinder.speed = 0;
-		weapon.GetComponent<shotMover> ().enabled = true;
-		StartCoroutine ("rangedStopTime");
+		if (weapon != null) {
+			pathFinder.speed = 0;
+			weapon.GetComponent<shotMover> ().enabled = true;
+			StartCoroutine ("rangedStopTime");
+		}
 	}
 
 	IEnumerator rangedStopTime()
@@ -244,6 +255,14 @@ public class Enemy : MonoBehaviour // buggy as fuck
 			percent += Time.deltaTime * meleeSpeed;
 			float interpolation = (-Mathf.Pow(percent,2)+ percent)*4;
 			transform.position = Vector3.Lerp (currentPos, targetPos, interpolation);
+			meleeHit = Physics.Linecast (transform.position + transform.up, meleePos.position, 1 << LayerMask.NameToLayer ("Player"));
+
+			if (meleeHit) {
+				player.GetComponent<PlayerShooting> ().health -= meleeDamage;
+				meleeHit = false;
+				GamePad.SetVibration (PlayerIndex.One, 100, 100);
+				StartCoroutine ("vibrationTime");
+			}
 
 			yield return null;
 		}
@@ -256,10 +275,16 @@ public class Enemy : MonoBehaviour // buggy as fuck
 		yield return new WaitForSeconds (1f);
 		toState (new enemyPatrol ());
 	}
-
-	/*IEnumerator particleDestroy()
+		
+	IEnumerator shotFlash()
 	{
-		yield return new WaitForSeconds ();
-		Destroy (deathParticle);
-	}*/
+		yield return new WaitForSeconds (0.1f);
+		gameObject.GetComponent<Renderer> ().material = normal;
+	}
+
+	IEnumerator vibrationTime()
+	{
+		yield return new WaitForSeconds (vibrateTime);
+		GamePad.SetVibration (PlayerIndex.One, 0, 0);
+	}
 }				

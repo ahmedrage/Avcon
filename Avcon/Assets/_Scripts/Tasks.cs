@@ -125,7 +125,8 @@ public class Tasks : MonoBehaviour {
 	public AudioSource audioStart;
 	public int tasksDisplayed;
 	public Light Scenelight;
-
+	public UnityStandardAssets.ImageEffects.MotionBlur motionBlur;
+	public float blurAmmount;
 	bool ending;
 	bool ended;
 	// Use this for initialization
@@ -134,7 +135,7 @@ public class Tasks : MonoBehaviour {
 	void Update () {
 		if (ending == true && ended == false) {
 			ended = true;
-			//Scenelight.color 
+			motionBlur.blurAmount = blurAmmount;
 		}
 
 		setText ();
@@ -151,7 +152,7 @@ public class Tasks : MonoBehaviour {
 	}
 
 	void Start () {
-
+		motionBlur = GameObject.Find("FirstPersonCharacter").GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ();
 		foreach (Task element in playerTasks) {
 			element.tasksClass = transform.GetComponent<Tasks> ();
 			element.setValues ();

@@ -9,7 +9,7 @@ public class DoorScript : MonoBehaviour {
 	public bool destroyPreviousRoom;
 	public GameObject previousRoom;
 	public GameObject nextRoomEnemies;
-	public GameObject nextRoomSpawn;
+	//public GameObject nextRoomSpawn;
 
 	AudioSource doorAudio;
 
@@ -45,8 +45,12 @@ public class DoorScript : MonoBehaviour {
 
 		if (destroyPreviousRoom == true && previousRoom != null) {
 			Destroy (previousRoom);
-			nextRoomEnemies.SetActive (true);
-			nextRoomSpawn.SetActive (true);
+			if (nextRoomEnemies != null) {
+				nextRoomEnemies.SetActive (true);
+			}
+			/*if (nextRoomSpawn != null) {
+				nextRoomSpawn.SetActive (true);
+			}*/
 		}
 	}
 }

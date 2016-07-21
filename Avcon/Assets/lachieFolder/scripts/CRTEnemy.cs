@@ -5,10 +5,14 @@ public class CRTEnemy : MonoBehaviour {
 
 	public NavMeshAgent pathFinder;
 	public Transform player;
+	public Transform meleePos;
 	public Rigidbody rb;
 	public float radius;
 	public float meleeSpeed = 3;
+	public int meleeDamage = 5;
+	public int health;
 	public bool alert;
+	public bool meleeHit;
 
 	private float attackDistance = 1.7f;
 	private float throwDistance;
@@ -36,6 +40,10 @@ public class CRTEnemy : MonoBehaviour {
 		Alert ();
 		Attack ();
 		Chasing ();
+
+		if (health <= 0) {
+			Destroy (gameObject);
+		}
 	}
 
 
@@ -79,6 +87,11 @@ public class CRTEnemy : MonoBehaviour {
 			percent += Time.deltaTime * meleeSpeed;
 			float interpolation = (-Mathf.Pow(percent,2)+ percent)*4;
 			transform.position = Vector3.Lerp (currentPos, targetPos, interpolation);
+			meleeHit = Physics.Linecast (transform.position + transform.up, meleePos.position, 1 << LayerMask.NameToLayer ("Player"));
+
+			if (meleeHit) {
+				player.GetComponent<PlayerShooting> ().health -= meleeDamage;
+			}
 
 			yield return null;
 		}

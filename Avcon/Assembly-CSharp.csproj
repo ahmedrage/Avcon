@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\XInputDotNet\Examples\XInputTestCS.cs" />
      <Compile Include="Assets\_Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" />
      <Compile Include="Assets\_Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\HeadBob.cs" />
      <Compile Include="Assets\_Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\MouseLook.cs" />
@@ -94,6 +95,7 @@
      <Compile Include="Assets\_Scripts\DoorScript.cs" />
      <Compile Include="Assets\_Scripts\PlayerShooting.cs" />
      <Compile Include="Assets\_Scripts\Tasks.cs" />
+     <Compile Include="Assets\_Scripts\Timer.cs" />
      <Compile Include="Assets\_Scripts\cameraFollow.cs" />
      <Compile Include="Assets\_Scripts\enemyScript.cs" />
      <Compile Include="Assets\_Scripts\menuScript.cs" />
@@ -104,6 +106,10 @@
      <Compile Include="Assets\_Scripts\screenShake.cs" />
      <Compile Include="Assets\_Scripts\stressMeter.cs" />
      <Compile Include="Assets\endLevel.cs" />
+     <Compile Include="Assets\lachieFolder\menu_Options.cs" />
+     <Compile Include="Assets\lachieFolder\menu_Play.cs" />
+     <Compile Include="Assets\lachieFolder\menu_Quit.cs" />
+     <Compile Include="Assets\lachieFolder\optionsMenu.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CRTEnemy.cs" />
      <Compile Include="Assets\lachieFolder\scripts\CameraController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Enemy.cs" />
@@ -111,20 +117,22 @@
      <Compile Include="Assets\lachieFolder\scripts\Printer.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Rotator.cs" />
      <Compile Include="Assets\lachieFolder\scripts\Spawn.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\bossDeath.cs" />
      <Compile Include="Assets\lachieFolder\scripts\closeIn.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyAttack.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyPatrol.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemySeen.cs" />
      <Compile Include="Assets\lachieFolder\scripts\enemyWeapon.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\fadeScreen.cs" />
      <Compile Include="Assets\lachieFolder\scripts\fearLightingChange.cs" />
      <Compile Include="Assets\lachieFolder\scripts\firstEncounter.cs" />
      <Compile Include="Assets\lachieFolder\scripts\levelGenTest.cs" />
-     <Compile Include="Assets\lachieFolder\scripts\menu.cs" />
      <Compile Include="Assets\lachieFolder\scripts\objectKinematic.cs" />
      <Compile Include="Assets\lachieFolder\scripts\playerController.cs" />
      <Compile Include="Assets\lachieFolder\scripts\playerShotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\printerRotate.cs" />
      <Compile Include="Assets\lachieFolder\scripts\printerShotMover.cs" />
+     <Compile Include="Assets\lachieFolder\scripts\promptFade.cs" />
      <Compile Include="Assets\lachieFolder\scripts\shotMover.cs" />
      <Compile Include="Assets\lachieFolder\scripts\weaponDrop.cs" />
      <Compile Include="Assets\playerFollow.cs" />
@@ -154,10 +162,12 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\RadialBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfFieldDX11.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
+     <None Include="Assets\lachieFolder\shaders\outLineShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset3.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
+     <None Include="Assets\XInputDotNet\MITLicense.txt" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
@@ -217,6 +227,9 @@
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="XInputDotNetPure">
+ <HintPath>C:/Users/simpsl/Desktop/white collar/Avcon/Assets/Plugins/x86_64/XInputDotNetPure.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
