@@ -18,6 +18,7 @@ public class menu_Options : MonoBehaviour, ISelectHandler, IDeselectHandler {
 				menu.SetActive (false);
 				optionsMenu.SetActive (true);
 				slider.Select ();
+				this.gameObject.SetActive (false);
 			}
 		}
 	}
