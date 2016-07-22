@@ -7,12 +7,10 @@ using System.Collections;
 public class optionsMenu : MonoBehaviour{
 
 	public GameObject mainMenu;
-	public Toggle mute;
 
 	// Use this for initialization
 	void Start () 
 	{
-		mute.Select ();
 	}
 	
 	// Update is called once per frame

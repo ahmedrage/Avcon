@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\lachieFolder\optionsMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\lachieFolder\menu_Play.cs">
     <Files>
-      <File FileName="Assets\lachieFolder\menu_Options.cs" Line="11" Column="1" />
-      <File FileName="Assets\lachieFolder\menu_Play.cs" Line="18" Column="14" />
-      <File FileName="Assets\lachieFolder\optionsMenu.cs" Line="15" Column="18" />
+      <File FileName="Assets\lachieFolder\optionsMenu.cs" Line="14" Column="1" />
+      <File FileName="Assets\lachieFolder\menu_Options.cs" Line="1" Column="1" />
+      <File FileName="Assets\lachieFolder\menu_Play.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
