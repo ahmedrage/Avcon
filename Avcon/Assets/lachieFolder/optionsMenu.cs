@@ -7,6 +7,7 @@ using System.Collections;
 public class optionsMenu : MonoBehaviour{
 
 	public GameObject mainMenu;
+	public Button button;
 
 	// Use this for initialization
 	void Start () 
@@ -18,6 +19,7 @@ public class optionsMenu : MonoBehaviour{
 	{
 		if (GamePad.GetState (PlayerIndex.One).Buttons.B == ButtonState.Pressed) {
 			mainMenu.SetActive (true);
+			button.Select ();
 			this.gameObject.SetActive (false);
 		}
 	}

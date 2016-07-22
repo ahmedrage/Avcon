@@ -11,6 +11,7 @@ public class menu_Play : MonoBehaviour,ISelectHandler,IDeselectHandler {
 	public GameObject Ximg;
 	public Image xButton;
 	public Text prompt;
+	public EventSystem eventSystem;
 	public float duration; 
 
 	private bool selected;

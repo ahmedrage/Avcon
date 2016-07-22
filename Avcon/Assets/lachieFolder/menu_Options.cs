@@ -8,6 +8,7 @@ public class menu_Options : MonoBehaviour, ISelectHandler, IDeselectHandler {
 
 	public GameObject menu;
 	public GameObject optionsMenu;
+	public Slider slider;
 	public bool selected;
 
 	void Update () 
@@ -16,6 +17,7 @@ public class menu_Options : MonoBehaviour, ISelectHandler, IDeselectHandler {
 			if (GamePad.GetState (PlayerIndex.One).Buttons.A == ButtonState.Pressed) {
 				menu.SetActive (false);
 				optionsMenu.SetActive (true);
+				slider.Select ();
 			}
 		}
 	}
