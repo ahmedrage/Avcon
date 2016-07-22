@@ -127,6 +127,9 @@ public class Tasks : MonoBehaviour {
 	public Light Scenelight;
 	public UnityStandardAssets.ImageEffects.MotionBlur motionBlur;
 	public float blurAmmount;
+
+	public Task currentTask;
+
 	bool ending;
 	bool ended;
 	// Use this for initialization
@@ -162,13 +165,9 @@ public class Tasks : MonoBehaviour {
 	}
 	public void setText () {
 		
-		//print ("Case2");
+
 		foreach (Task element in playerTasks) {
-			
-			//if (playerTasks[0].completed == true)
-			//taskDesc1.text = "";
-			//taskDesc2.text = "";
-			//taskDesc3.text = "";
+
 			int index = Array.IndexOf (playerTasks, element);
 
 			if (index != 0) {
@@ -183,13 +182,14 @@ public class Tasks : MonoBehaviour {
 						taskDesc1.text = element.desc;
 						taskDesc2.text = "";
 						taskDesc3.text = "";
-
+						currentTask = element;
 						break;
 					case 2:
 						print ("Case2");
 						taskDesc3.text = "";
 						if (tasksDisplayed == 0) {
 							taskDesc1.text = element.desc;
+							currentTask = element;
 						} else if (tasksDisplayed == 1) {
 							taskDesc2.text = element.desc;
 						} else {
@@ -201,6 +201,7 @@ public class Tasks : MonoBehaviour {
 						print ("Case3");
 						if (tasksDisplayed == 0) {
 							taskDesc1.text = element.desc;
+							currentTask = element;
 						} else if (tasksDisplayed == 1) {
 							taskDesc2.text = element.desc;
 						} else {
@@ -215,6 +216,7 @@ public class Tasks : MonoBehaviour {
 				}
 			} else if (index == 0 && element.active == true) {
 				taskDesc1.text = element.desc;
+				currentTask = element;
 			}
 
 			if (element.active == true && element.completed != true) {
