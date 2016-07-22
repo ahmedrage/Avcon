@@ -22,8 +22,8 @@ public class PlayerShooting : MonoBehaviour {
 
 	[HideInInspector] public int[] ammoArray;
 	[HideInInspector] public int ammo;
-	[HideInInspector] public bool hasObject;
-	[HideInInspector] public GameObject pickedObject;
+	public bool hasObject;
+	public GameObject pickedObject;
 	[HideInInspector] public GameObject objectInHands;
 
 	GameObject currentProjectile;
@@ -33,6 +33,7 @@ public class PlayerShooting : MonoBehaviour {
 	int currentProjectileNum;
 	RaycastHit pickUpHit;
 	screenShake shakeScript;
+
 
 	void Start () {
 		ammoArray = new int[3];
@@ -46,9 +47,9 @@ public class PlayerShooting : MonoBehaviour {
 		
 	}
 	void Update () {
-		/*if (health <= 0) {
-			Application.LoadLevel (Application.loadedLevel);
-		}*/
+		if (hands.childCount == 0) {
+			hasObject = false;
+		}
 
 		rayCasting ();
 		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis ("Fire1") > 0) && GamePad.GetState (PlayerIndex.One).Triggers.Right >= 0.5) {

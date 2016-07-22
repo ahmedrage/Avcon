@@ -10,11 +10,13 @@ public class pickUp : MonoBehaviour
 	public float speedToHands = 10;
 	public Transform target;
 	public PlayerShooting shootScript;
+	Vector3 firstPosition;
 
 	// Use this for initialization
 	void Start () 
 	{
 		shootScript = GameObject.Find ("Player").GetComponent<PlayerShooting> ();
+		firstPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -34,11 +36,21 @@ public class pickUp : MonoBehaviour
 		}
 	}
 
+	void OnCollisionEnter (Collision other) {
+		if (other.gameObject.tag == "killFloor") {
+			respawn ();
+		}
+	}
+
 	void OnCollisionStay() {
 		colliding = true;
 	}
 
 	void OnCollisionExit() {
 		colliding = false;
+	}
+
+	public void respawn () {
+		transform.position = firstPosition;
 	}
 }

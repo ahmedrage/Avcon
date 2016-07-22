@@ -63,6 +63,7 @@ public class Task {
 		}
 
 		if (held == true) {
+			tasksClass.currentTask = this;
 			shootScript.hasObject = true;
 		}
 	}
@@ -129,7 +130,7 @@ public class Tasks : MonoBehaviour {
 	public float blurAmmount;
 
 	public Task currentTask;
-
+	public GameObject endDoor;
 	bool ending;
 	bool ended;
 	// Use this for initialization
@@ -228,6 +229,7 @@ public class Tasks : MonoBehaviour {
 		tasksDisplayed = 0;
 
 		if (tasksCompleted >= playerTasks.Length) {
+			GameObject.Find ("arrow").GetComponent<pointerScript> ().target = endDoor;
 			taskDesc1.text = "Go to boss' office";
 			taskDesc2.text = "";
 			taskDesc3.text = "";
