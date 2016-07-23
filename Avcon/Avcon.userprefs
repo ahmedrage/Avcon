@@ -1,10 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\lachieFolder\optionsMenu.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\PlayerShooting.cs">
     <Files>
-      <File FileName="Assets\lachieFolder\optionsMenu.cs" Line="24" Column="28" />
+      <File FileName="Assets\_Scripts\PlayerShooting.cs" Line="54" Column="242" />
+      <File FileName="Assets\Standard Assets\Characters\FirstPersonCharacter\Scripts\FirstPersonController.cs" Line="95" Column="10" />
+      <File FileName="Assets\lachieFolder\optionsMenu.cs" Line="44" Column="3" />
       <File FileName="Assets\lachieFolder\menu_Play.cs" Line="14" Column="1" />
-      <File FileName="Assets\lachieFolder\menu_Options.cs" Line="10" Column="1" />
+      <File FileName="Assets\lachieFolder\menu_Options.cs" Line="11" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

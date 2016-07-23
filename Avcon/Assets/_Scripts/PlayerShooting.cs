@@ -51,7 +51,7 @@ public class PlayerShooting : MonoBehaviour {
 		}*/
 
 		rayCasting ();
-		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis ("Fire1") > 0) && GamePad.GetState (PlayerIndex.One).Triggers.Right >= 0.5) {
+		if (Time.time > timeToShoot && Time.timeScale != 0 && enableCombat == true && (ammo > 0 || infiniteAmmo == true) && (Input.GetButtonDown ("Fire1") || Input.GetAxis ("Fire1") > 0 || GamePad.GetState (PlayerIndex.One).Triggers.Right >= 0.5)) {
 			GamePad.SetVibration (PlayerIndex.One, 100, 100);
 			StartCoroutine ("vibrationTime");
 			shoot ();

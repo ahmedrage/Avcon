@@ -33,4 +33,9 @@ public class menu_Options : MonoBehaviour, ISelectHandler, IDeselectHandler {
 	{
 		selected = false;
 	}
+
+	public void Sensitivity(float xSensitivity)
+	{
+		
+	}
 }
