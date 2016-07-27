@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System.Collections;
 using System;
 
 [System.Serializable]
@@ -150,11 +149,6 @@ public class Tasks : MonoBehaviour {
 		}
 	}
 
-	void taskUpdate() {
-
-		
-	}
-
 	void Start () {
 		motionBlur = GameObject.Find("FirstPersonCharacter").GetComponent<UnityStandardAssets.ImageEffects.MotionBlur> ();
 		foreach (Task element in playerTasks) {
@@ -238,5 +232,12 @@ public class Tasks : MonoBehaviour {
 	}
 	public void printError (string message) {
 		Debug.LogError (message);
+	}
+
+	public void finishTasks() {
+		foreach (Task element in playerTasks) {
+			element.active = false;
+			element.completed = true;
+		}
 	}
 }
