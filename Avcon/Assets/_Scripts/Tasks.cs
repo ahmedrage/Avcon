@@ -83,7 +83,6 @@ public class Task {
 			complete = true;
 			desc = "";
 			tasksClass.tasksCompleted++;
-			//tasksClass.tasksDisplayed--;
 			active = false;
 			GameObject.Destroy (taskObject);
 			target.transform.FindChild ("questMarker").gameObject.SetActive (false);
@@ -127,26 +126,13 @@ public class Tasks : MonoBehaviour {
 	public Light Scenelight;
 	public UnityStandardAssets.ImageEffects.MotionBlur motionBlur;
 	public float blurAmmount;
-
+	public float stress;
 	public Task currentTask;
 	public GameObject endDoor;
 	bool ending;
 	bool ended;
 	// Use this for initialization
 	void Awake() { 
-	}
-	void Update () {
-		if (ending == true && ended == false) {
-			ended = true;
-			motionBlur.blurAmount = blurAmmount;
-		}
-
-		setText ();
-		foreach (Task element in playerTasks) {
-			element.checkHeld ();
-			element.checkNextTask ();
-			element.setMarker ();
-		}
 	}
 
 	void Start () {
@@ -155,12 +141,31 @@ public class Tasks : MonoBehaviour {
 			element.tasksClass = transform.GetComponent<Tasks> ();
 			element.setValues ();
 		}
-		InvokeRepeating ("taskUpdate", 0, 0.1f);
-
 	}
-	public void setText () {
-		
+	void Update () {
+		manageStress ();
+		if (ending == true && ended == false) {
+			ended = true;
+			//motionBlur.blurAmount = blurAmmount;
+		}
 
+		motionBlur.blurAmount = stress / 100;
+		setText ();
+		foreach (Task element in playerTasks) {
+			element.checkHeld ();
+			element.checkNextTask ();
+			element.setMarker ();
+		}
+	}
+
+	public void manageStress () {
+		float f_taskscompleted = tasksCompleted;
+		float f_totalTasks = playerTasks.Length;
+		float currentVelocity = 0;
+		stress = Mathf.SmoothDamp(stress, f_taskscompleted / f_totalTasks * 100f,ref currentVelocity, 0.1f);
+	}
+
+	public void setText () {
 		foreach (Task element in playerTasks) {
 
 			int index = Array.IndexOf (playerTasks, element);
@@ -229,9 +234,6 @@ public class Tasks : MonoBehaviour {
 			taskDesc3.text = "";
 			ending = true;
 		}
-	}
-	public void printError (string message) {
-		Debug.LogError (message);
 	}
 
 	public void finishTasks() {

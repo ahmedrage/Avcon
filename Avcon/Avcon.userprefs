@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\Timer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Scripts\Tasks.cs">
     <Files>
+      <File FileName="Assets\_Scripts\Tasks.cs" Line="152" Column="40" />
       <File FileName="Assets\lachieFolder\optionsMenu.cs" Line="1" Column="1" />
       <File FileName="Assets\lachieFolder\menu_Options.cs" Line="1" Column="1" />
       <File FileName="Assets\lachieFolder\menu_Play.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Scripts\Tasks.cs" Line="6" Column="1" />
-      <File FileName="Assets\_Scripts\Timer.cs" Line="29" Column="4" />
+      <File FileName="Assets\_Scripts\Timer.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
